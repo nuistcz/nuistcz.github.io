@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Masa</title>
+<title>About | Masa</title>
 <meta name="description" content="Stay foolish, Stay young">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://uorcz.github.io/favicon.ico?v=1556747346912">
-<link rel="stylesheet" href="https://uorcz.github.io/styles/main.css">
+<link rel="shortcut icon" href="/Users/sousei/Documents/Gridea/output/favicon.ico?v=1556748450106">
+<link rel="stylesheet" href="/Users/sousei/Documents/Gridea/output/styles/main.css">
 
 
 
@@ -28,8 +28,8 @@
       <div class="sidebar" :class="{ 'full-height': menuVisible }">
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
-      <a class="site-title-container" href="https://uorcz.github.io">
-        <img src="https://uorcz.github.io/images/avatar.png?v=1556747346912" class="site-logo">
+      <a class="site-title-container" href="/Users/sousei/Documents/Gridea/output">
+        <img src="/Users/sousei/Documents/Gridea/output/images/avatar.png?v=1556748450106" class="site-logo">
         <h1 class="site-title">Masa</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -57,7 +57,7 @@
         
       
         
-          <a href="/post/about" class="site-nav">
+          <a href="/about" class="site-nav">
             关于
           </a>
         
@@ -90,14 +90,31 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
-            <article class="post-item">
-              <div class="left">
-                <!-- Language Selector -->
-                    <blockquote><p>Stay Hungry<br>Stay Foolish<br>--Steve Jobs</p></blockquote>
-                    <p>Hey，I am <strong>Masa</strong>.</p>
-                    <p>我是<strong>曹政</strong>，来自 <a href="https://www.reading.ac.uk/">University of Reading</a>。我将会在我的博客里分享一些我的学习过程和个人思考。这是我的利用 <a href="https://pages.github.com/">GitHub Pages</a> 与 <a href="http://jekyll.com.cn/">Jekyll</a>，并且搬运自<a href="https://github.com/Huxpro/huxpro.github.io/">Huxpro</a>的教程所搭建的个人博客。我的GitHub主页<a href="https://github.com/nuistcz">👉GitHub·nuistcz</a>。鄙人才疏学浅，不当之处请多多指教。</p>
-                    <p>技术栈包括Python, C/C++, IoT(STM32/MSP430), Matlab和LaTex。</p>
+          <div class="post-detail">
+            <h2 class="post-title">About</h2>
+            <div class="post-content">
+              <h1 id="about一级标题">About一级标题</h1>
+<p>正文部分</p>
+<h2 id="about-me-二级标题">About Me 二级标题</h2>
+<p><strong>加粗</strong>
+<em>斜杠</em></p>
+<blockquote>
+<p>引用</p>
+</blockquote>
+<pre><code>代码块
+</code></pre>
+<ul>
+<li>列表</li>
+<li>列表</li>
+</ul>
+<ol>
+<li>列表2</li>
+</ol>
+<!-- more -->
+<p>这里是摘要</p>
+
+            </div>
+          </div>
 
         </div>
       </div>
@@ -119,45 +136,7 @@ var app = new Vue({
 })
 
 </script>
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    // get nodes
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    var $select = document.querySelector("select");
 
-    // bind hashchange event
-    window.addEventListener('hashchange', _render);
-
-    // handle render
-    function _render(){
-        var _hash = window.location.hash;
-        // en
-        if(_hash == "#en"){
-            $select.selectedIndex = 1;
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        // zh by default
-        }else{
-            // not trigger onChange, otherwise cause a loop call.
-            $select.selectedIndex = 0;
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }
-    }
-
-    // handle select change
-    function onLanChange(index){
-        if(index == 0){
-            window.location.hash = "#zh"
-        }else{
-            window.location.hash = "#en"
-        }
-    }
-
-    // init
-    _render();
-</script>
 
 
 
