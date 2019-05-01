@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Masa</title>
+<meta name="description" content="Stay foolish, Stay young">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://uorcz.github.io/favicon.ico?v=1556747346912">
+<link rel="stylesheet" href="https://uorcz.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://uorcz.github.io">
+        <img src="https://uorcz.github.io/images/avatar.png?v=1556747346912" class="site-logo">
+        <h1 class="site-title">Masa</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Stay foolish, Stay young
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <!-- Language Selector -->
+<select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
+    <option value="0"> 中文 Chinese </option>
+    <option value="1" selected="1"> 英文 English </option>
+</select>
+
+<!-- Chinese Version -->
+<div class="zh post-container">
+
+    <!--copied from markdown -->
+    <blockquote><p>Stay Hungry<br>
+    Stay Foolish<br>--Steve Jobs</p></blockquote>
+
+    <p>Hey，I am <strong>Masa</strong>.</p>
+
+
+    <p>我是<strong>曹政</strong>，来自 <a href="https://www.reading.ac.uk/">University of Reading</a>。我将会在我的博客里分享一些我的学习过程和个人思考。
+        这是我的利用 <a href="https://pages.github.com/">GitHub Pages</a> 与 <a href="http://jekyll.com.cn/">Jekyll</a>，并且搬运自<a href="https://github.com/Huxpro/huxpro.github.io/">Huxpro</a>的教程所搭建的个人博客。我的GitHub主页<a href="https://github.com/nuistcz">👉GitHub·nuistcz</a>。鄙人才疏学浅，不当之处请多多指教。</p>
+    <p>
+
+    <p>技术栈包括Python, C/C++, IoT(STM32/MSP430), Matlab和LaTex。</p>
+       <!-- 
+    <p>
+    <h5>本科阶段主要成绩：</h5>
+    <p></p>
+    <ul>
+            <b>电子设计</b>
+                <li>2016江苏省“TI”杯 一等奖</li>
+                <li>2017“瑞萨”杯 一等奖</li>
+                <li>2018江苏省“TI”杯 一等奖</li>
+                <p></p>
+            <b>数学建模</b>
+                <li>2017高教社杯 江苏省一等奖</li>
+                <li>2018 MCM 一等奖</li>
+                <p></p>
+            <b>创新创业</b>
+                <li>2017“互联网+” 全国银奖</li>
+                <li>2017 NOC 一等奖</li>
+                <li>2017“兰景杯” 一等奖</li>
+                <p></p>
+            <b>其余</b>
+                <li>发明专利4项，实用新型专利10项</li>
+                <li>约20项省级以上奖励，40项校级奖励</li>
+    </ul>
+    </p> -->
+
+    
+    <h5>Links</h5>
+
+    <ul>
+        <li><a href="https://www.reading.ac.uk/">GitHub</a></li>
+        <li><a href="http://jekyll.com.cn/">jekyll</a></li>
+        <li><a href="http://huangxuan.me/">Author: Huxpro</a></li> 
+        <!-- <li><a href="https://analytics.google.com/analytics">Google Analytics</a></li>
+    </ul>
+    --> 
+</div>
+
+<!-- English Version -->
+<div class="en post-container">
+    <blockquote><p>Stay Hungry<br>
+    Stay Foolish<br>--Steve Jobs</p></blockquote>
+
+    <p>Hey，I am <strong>Masa</strong>. I am student of UoR, majoring in chemistry.</p>
+
+    <p>This is my personal blog, through making Github Pages and Jekyll.My GitHub is <a href="http://github.com/nuistcz">Github·Nuistcz</a>.</p>
+    
+    <p>I am able to prgram with python, C, C++ and Java. Project has been published as the following list:
+        <li><a herf="github.com/nuistcz">Iot</li>
+    </p>
+
+    <h5>Links</h5>
+
+    <ul>
+        <li><a href="https://github.com/">GitHub</a></li>
+        <li><a href="http://jekyll.com.cn/">jekyll</a></li>
+        <li><a href="http://huangxuan.me/">Author: Huxpro</a></li> 
+    </ul>
+</div>
+
+<!-- Handle Language Change -->
+<script type="text/javascript">
+    // get nodes
+    var $zh = document.querySelector(".zh");
+    var $en = document.querySelector(".en");
+    var $select = document.querySelector("select");
+
+    // bind hashchange event
+    window.addEventListener('hashchange', _render);
+
+    // handle render
+    function _render(){
+        var _hash = window.location.hash;
+        // en
+        if(_hash == "#en"){
+            $select.selectedIndex = 1;
+            $en.style.display = "block";
+            $zh.style.display = "none";
+        // zh by default
+        }else{
+            // not trigger onChange, otherwise cause a loop call.
+            $select.selectedIndex = 0;
+            $zh.style.display = "block";
+            $en.style.display = "none";
+        }
+    }
+
+    // handle select change
+    function onLanChange(index){
+        if(index == 0){
+            window.location.hash = "#zh"
+        }else{
+            window.location.hash = "#en"
+        }
+    }
+
+    // init
+    _render();
+</script>
+
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
