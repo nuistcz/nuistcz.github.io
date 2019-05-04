@@ -9,9 +9,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://uorcz.github.io/favicon.ico?v=1556993699853">
+<link rel="shortcut icon" href="https://uorcz.github.io/favicon.ico?v=1556994404884">
 <link rel="stylesheet" href="https://uorcz.github.io/styles/main.css">
 
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -19,6 +25,15 @@
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123943100-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123943100-1');
+</script>
 
 
   </head>
@@ -29,7 +44,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://uorcz.github.io">
-        <img src="https://uorcz.github.io/images/avatar.png?v=1556993699853" class="site-logo">
+        <img src="https://uorcz.github.io/images/avatar.png?v=1556994404884" class="site-logo">
         <h1 class="site-title">Masa</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -74,11 +89,27 @@
         
       
         
-      
+          <a class="social-link" href="https://twitter.com/JustMasaa" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
         
       
         
+          <a class="social-link" href="https://weibo.com/1797461315/profile?topnav=1&amp;wvr=6&amp;is_all=1" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
       
+        
+          <a class="social-link" href="https://www.zhihu.com/people/cao-zheng-26-67/activities" target="_blank">
+            <i class="fab fa-zhihu"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://www.facebook.com/caoz123" target="_blank">
+            <i class="fab fa-facebook"></i>
+          </a>
         
       
     </div>
@@ -110,6 +141,12 @@
             
 
             
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
 
           </div>
 
@@ -133,6 +170,26 @@ var app = new Vue({
 })
 
 </script>
+
+
+  
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: 'Blog',
+      apikey: 'HNDgkqiT13Id3OuwcHMiy5OBHG28TQM41cUK21ZpoBgTpEkPzNXNRB3QDNY4td5J',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
 
 
 
