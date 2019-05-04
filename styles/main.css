@@ -1627,3 +1627,15 @@ a {
   font-size: 16px;
   margin: 4px 8px;
 }
+
+      .sidebar {
+        width: 360px;
+      }
+      .main-container {
+        margin-left: 360px;
+      }
+    
+      .post-item .right .feature-container {
+        border-radius: 5px;
+      }
+    
