@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Python中下划线_的用法 | Masa</title>
+<meta name="description" content="&lt;b&gt;&amp;#12288&amp;#8194Stay foolish, Stay hungry&lt;/b&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://uorcz.github.io/favicon.ico?v=1556995577475">
+<link rel="stylesheet" href="https://uorcz.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123943100-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123943100-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://uorcz.github.io">
+        <img src="https://uorcz.github.io/images/avatar.png?v=1556995577475" class="site-logo">
+        <h1 class="site-title">Masa</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="github.com/nuistcz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://twitter.com/JustMasaa" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/1797461315/profile?topnav=1&amp;wvr=6&amp;is_all=1" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://www.zhihu.com/people/cao-zheng-26-67/activities" target="_blank">
+            <i class="fab fa-zhihu"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://www.facebook.com/caoz123" target="_blank">
+            <i class="fab fa-facebook"></i>
+          </a>
+        
+      
+    </div>
+    <div class="site-description">
+      <b>&#12288&#8194Stay foolish, Stay hungry</b>
+    </div>
+    <div class="site-footer">
+      &#12288&#8194苏ICP备17070021号<br><br>
+©️Copyright 2019 Masa, Powered by Gridea 
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Python中下划线_的用法</h2>
+            <div class="post-date">2018-08-16</div>
+            
+              <div class="feature-container" style="background-image: url('https://uorcz.github.io/post-images/Python中下划线_的用法.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h2 id="前言">前言</h2>
+<p>从 -<a href="http://igorsobreira.com/2010/09/16/difference-between-one-underline-and-two-underlines-in-python.html">Difference between _, __ and <strong>xx</strong> in Python</a> 搬运</p>
+<h2 id="_单下划线">“_”单下划线</h2>
+<p>Python中不存在真正的私有方法。为了实现类似于c++中私有方法，可以在类的方法或属性前加一个“_”单下划线，意味着该方法或属性不应该去调用，它并不属于API。
+在使用property时，经常出现这个问题：</p>
+<pre><code class="language-python">class BaseForm(StrAndUnicode):
+    ...
+    
+    def _get_errors(self):
+        &quot;Returns an ErrorDict for the data provided for the form&quot;
+        if self._errors is None:
+            self.full_clean()
+        return self._errors
+    
+    errors = property(_get_errors)
+</code></pre>
+<p>上面的代码片段来自于django源码（django/forms/forms.py）。这里的errors是一个属性，属于API的一部分，但是_get_errors是私有的，是不应该访问的，但可以通过errors来访问该错误结果。</p>
+<h2 id="__双下划线">“__”双下划线</h2>
+<p>这个双下划线更会造成更多混乱，但它并不是用来标识一个方法或属性是私有的，真正作用是用来避免子类覆盖其内容。</p>
+<p>让我们来看一个例子：</p>
+<pre><code class="language-python">class A(object): 
+    def __method(self): 
+        print &quot;I'm a method in A&quot; 
+    def method(self): 
+        self.__method() a = A() a.method()
+</code></pre>
+<p>输出是这样的：</p>
+<pre><code class="language-python">$ python example.py 
+I'm a method in A
+</code></pre>
+<p>很好，出现了预计的结果。</p>
+<p>我们给A添加一个子类，并重新实现一个__method：</p>
+<pre><code class="language-python">class B(A): 
+    def __method(self): 
+        print &quot;I'm a method in B&quot; 
+
+b = B() 
+b.method()
+</code></pre>
+<p>现在，结果是这样的：</p>
+<pre><code class="language-python">$ python example.py
+I'm a method in A
+</code></pre>
+<p>就像我们看到的一样，B.method()不能调用B.__method的方法。实际上，它是&quot;__&quot;两个下划线的功能的正常显示。</p>
+<p>因此，在我们创建一个以&quot;__&quot;两个下划线开始的方法时，这意味着这个方法不能被重写，它只允许在该类的内部中使用。</p>
+<p>在Python中如是做的？很简单，它只是把方法重命名了，如下：</p>
+<pre><code class="language-python">a = A()
+a._A__method()  # never use this!! please!
+$ python example.py 
+I'm a method in A
+</code></pre>
+<p>如果你试图调用a.__method，它还是无法运行的，就如上面所说，只可以在类的内部调用__method。</p>
+<h2 id="__xx__前后各双下划线">“__xx__”前后各双下划线</h2>
+<p>当你看到&quot;__this__&quot;的时，就知道不要调用它。为什么？因为它的意思是它是用于Python调用的，如下：</p>
+<pre><code>&gt;&gt;&gt; name = &quot;igor&quot; 
+&gt;&gt;&gt; name.__len__() 4 
+&gt;&gt;&gt; len(name) 4 
+&gt;&gt;&gt; number = 10 
+&gt;&gt;&gt; number.__add__(20) 30 
+&gt;&gt;&gt; number + 20 30
+</code></pre>
+<p>“__xx__”经常是操作符或本地函数调用的magic methods。在上面的例子中，提供了一种重写类的操作符的功能。</p>
+<p>在特殊的情况下，它只是python调用的hook。例如，__init__()函数是当对象被创建初始化时调用的;__new__()是用来创建实例。</p>
+<pre><code class="language-python">class CrazyNumber(object):
+    def __init__(self, n): 
+        self.n = n 
+    def __add__(self, other): 
+        return self.n - other 
+    def __sub__(self, other): 
+        return self.n + other 
+    def __str__(self): 
+        return str(self.n) 
+
+num = CrazyNumber(10) 
+print num # 10
+print num + 5 # 5
+print num - 20 # 30    
+</code></pre>
+<p>另一个例子</p>
+<pre><code class="language-python">class Room(object):
+    def __init__(self): 
+        self.people = [] 
+    def add(self, person): 
+        self.people.append(person) 
+    def __len__(self): 
+        return len(self.people)
+ 
+room = Room() 
+room.add(&quot;Igor&quot;) 
+print len(room) # 1
+</code></pre>
+<h1 id="conclusion">Conclusion</h1>
+<ul>
+<li>使用_one_underline来表示该方法或属性是私有的，不属于API；</li>
+<li>当创建一个用于python调用或一些特殊情况时，使用__two_underline__；</li>
+<li>使用__just_to_underlines，来避免子类的重写！</li>
+</ul>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/coder2012">cococo点点</a></li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://uorcz.github.io/tag/python" class="tag">
+                    Python
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://uorcz.github.io/post/GAN for Medical Imaging">
+                  <h3 class="post-title">
+                    GAN for Medical Imaging
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f7aa39694fe645b3f30a',
+        clientSecret: 'd24006781030742dfe57b7bf55e971a0303a4b31',
+        repo: 'nuistcz.github.io',
+        owner: 'nuistcz',
+        admin: ['nuistcz'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
