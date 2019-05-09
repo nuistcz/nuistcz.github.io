@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>标签列表 | Masa</title>
+<title>CH3 | Masa</title>
 <meta name="description" content="&lt;b&gt;&amp;#12288&amp;#8194Stay foolish, Stay hungry&lt;/b&gt;">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -12,6 +12,12 @@
 <link rel="shortcut icon" href="https://nuistcz.github.io/favicon.ico?v=1557436134701">
 <link rel="stylesheet" href="https://nuistcz.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -120,22 +126,61 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="tag-list-title">标签列表</h2>
-          <div class="tags-container">
+          <div class="post-detail">
+            <h2 class="post-title">CH3</h2>
+            <div class="post-date">2019-04-29</div>
             
-              <a class="tag" href="https://nuistcz.github.io/tag/DB710qEUw">Chem</a>
+            <div class="post-content">
+              <h3 id="d-and-f-block-chemistry">d and f block chemistry</h3>
+<ul>
+<li>Electron configuration</li>
+<li>Lanthanide contraction</li>
+</ul>
+<h3 id="bioinorganic-chemistry">Bioinorganic chemistry</h3>
+<ul>
+<li>Redox Fe/Cu</li>
+<li>Enzyme Zn</li>
+<li>Electron transfer Fe-S cluster</li>
+<li>DNA Pt</li>
+</ul>
+<h3 id="organmetallic-chemistry">Organmetallic chemistry</h3>
+<ul>
+<li>Cabene</li>
+<li>HOMO/LUMO</li>
+</ul>
+<p><a href="masa@post.com">Email</a></p>
+
+            </div>
             
-              <a class="tag" href="https://nuistcz.github.io/tag/python">Python</a>
+              <div class="tag-container">
+                
+                  <a href="https://nuistcz.github.io/tag/DB710qEUw" class="tag">
+                    Chem
+                  </a>
+                
+              </div>
             
-              <a class="tag" href="https://nuistcz.github.io/tag/medical-imaging">Medical Imaging</a>
             
-              <a class="tag" href="https://nuistcz.github.io/tag/linux">Linux</a>
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://nuistcz.github.io/post/Python_underscores">
+                  <h3 class="post-title">
+                    Python的下划线用法
+                  </h3>
+                </a>
+              </div>
             
-              <a class="tag" href="https://nuistcz.github.io/tag/shu-ju-jie-gou">数据结构</a>
+
             
-              <a class="tag" href="https://nuistcz.github.io/tag/spider">Spider</a>
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
             
+
           </div>
+
         </div>
       </div>
     </div>
@@ -156,6 +201,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f7aa39694fe645b3f30a',
+        clientSecret: 'd24006781030742dfe57b7bf55e971a0303a4b31',
+        repo: 'nuistcz.github.io',
+        owner: 'nuistcz',
+        admin: ['nuistcz'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
