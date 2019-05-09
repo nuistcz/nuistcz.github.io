@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>文章归档 | Masa</title>
+<title>简单Python爬虫经验 | Masa</title>
 <meta name="description" content="&lt;b&gt;&amp;#12288&amp;#8194Stay foolish, Stay hungry&lt;/b&gt;">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -12,6 +12,12 @@
 <link rel="shortcut icon" href="https://nuistcz.github.io/favicon.ico?v=1557431963502">
 <link rel="stylesheet" href="https://nuistcz.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -120,119 +126,90 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
+          <div class="post-detail">
+            <h2 class="post-title">简单Python爬虫经验</h2>
+            <div class="post-date">2018-07-04</div>
+            
+              <div class="feature-container" style="background-image: url('https://nuistcz.github.io/post-images/简单Python爬虫经验.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h2 id="前言">前言</h2>
+<p>Python</p>
+<h2 id="key">Key</h2>
+<blockquote>
+<p>关键词：Python 爬虫</p>
+</blockquote>
+<h3 id="设计思路">设计思路</h3>
+<p>静态页面中使用<code>import requests</code>函数可以直接获取html页面信息，再使用BeautifulSoup库拉出xml，利用find_all方法可以获取指定标签的信息。但是在动态页面中的有效信息一般通过JavaScript脚本从数据库读信息。例如本次爬取<a href="http://www.sse.com.cn/">上海证券交易所</a>的上市公司详情，定义在<code>'td'</code>标签下，静态页面中没有匹配，这时就只能用Selenium提取动态页面。</p>
+<h3 id="demo">Demo</h3>
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+from selenium import webdriver
+import os
+import time
+import csv
+from lxml import etree
+lis = []
+temp = []
+total = []
+c = open(&quot;anhui.csv&quot;, &quot;w&quot;)
+writer = csv.writer(c)
 
-          <h2 class="archives-title">文章归档</h2>
-          <div class="archives-container">
+for line in open(&quot;anhui.txt&quot;):
+	if line != '\n':
+		# date = ''.join(date).strip('\n')
+		lis.append(line[0:6])
+
+print (lis)
+
+for i in range(len(lis)):
+	url = &quot;http://www.sse.com.cn/assortment/stock/list/info/company/index.shtml?COMPANY_CODE=&quot;+str(lis[i])	
+	driver=webdriver.Safari()
+	driver.get(url)
+	time.sleep(4)
+	data = driver.page_source
+	soup = BeautifulSoup(data, 'lxml')
+	grades = soup.find_all('td')
+	for grade in grades:
+		temp.append(grade.get_text())
+		print (grade)
+	writer.writerow(temp)
+	temp = []
+	driver.quit()
+
+c.close()
+</code></pre>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://developer.apple.com">Python</a></li>
+</ul>
+
+            </div>
             
-              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2019</h2>
-              
+              <div class="tag-container">
                 
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/ch3i1-inorganic-chemistry">
-                      <h2 class="post-title">
-                        CH3I1 Inorganic Chemistry
-                      </h2>
-                    </a>
-                  </article>
+                  <a href="https://nuistcz.github.io/tag/python" class="tag">
+                    Python
+                  </a>
                 
-              
+                  <a href="https://nuistcz.github.io/tag/spider" class="tag">
+                    Spider
+                  </a>
                 
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
+              </div>
             
-              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2018</h2>
+            
+
+            
               
-                
+                <div id="gitalk-container" data-aos="fade-in"></div>
               
-                
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/Python_underscores">
-                      <h2 class="post-title">
-                        Python的下划线用法
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/GAN for Medical Imaging">
-                      <h2 class="post-title">
-                        GAN for Medical Imaging
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/Python_Regular_expression">
-                      <h2 class="post-title">
-                        Python中正则表达式小结
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/Linux_Script">
-                      <h2 class="post-title">
-                        Linux运维常用命令小结
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/Python_file_dict">
-                      <h2 class="post-title">
-                        Python 文件/文件夹操作
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/Python_Dict">
-                      <h2 class="post-title">
-                        Python Dict 方法集合
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://nuistcz.github.io/post/简单Python爬虫经验">
-                      <h2 class="post-title">
-                        简单Python爬虫经验
-                      </h2>
-                    </a>
-                  </article>
-                
+
               
             
+
           </div>
-
-          <div class="pagination-container">
-  
-  
-</div>
 
         </div>
       </div>
@@ -254,6 +231,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f7aa39694fe645b3f30a',
+        clientSecret: 'd24006781030742dfe57b7bf55e971a0303a4b31',
+        repo: 'nuistcz.github.io',
+        owner: 'nuistcz',
+        admin: ['nuistcz'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
