@@ -4,14 +4,20 @@
     <meta charset="utf-8" >
 
 <title>About | Masa</title>
-<meta name="description" content="Stay foolish, Stay young">
+<meta name="description" content="&lt;b&gt;&amp;#12288&amp;#8194Stay foolish, Stay hungry&lt;/b&gt;">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://uorcz.github.io/favicon.ico?v=1556748502811">
-<link rel="stylesheet" href="https://uorcz.github.io/styles/main.css">
+<link rel="shortcut icon" href="https://nuistcz.github.io/favicon.ico?v=1557432119816">
+<link rel="stylesheet" href="https://nuistcz.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -19,6 +25,15 @@
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123943100-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123943100-1');
+</script>
 
 
   </head>
@@ -28,8 +43,8 @@
       <div class="sidebar" :class="{ 'full-height': menuVisible }">
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
-      <a class="site-title-container" href="https://uorcz.github.io">
-        <img src="https://uorcz.github.io/images/avatar.png?v=1556748502811" class="site-logo">
+      <a class="site-title-container" href="https://nuistcz.github.io">
+        <img src="https://nuistcz.github.io/images/avatar.png?v=1557432119816" class="site-logo">
         <h1 class="site-title">Masa</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -68,21 +83,42 @@
     <div class="social-container">
       
         
-      
+          <a class="social-link" href="github.com/nuistcz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
         
       
         
-      
+          <a class="social-link" href="https://twitter.com/JustMasaa" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
         
       
+        
+          <a class="social-link" href="https://weibo.com/1797461315/profile?topnav=1&amp;wvr=6&amp;is_all=1" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://www.zhihu.com/people/cao-zheng-26-67/activities" target="_blank">
+            <i class="fab fa-zhihu"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://www.facebook.com/caoz123" target="_blank">
+            <i class="fab fa-facebook"></i>
+          </a>
         
       
     </div>
     <div class="site-description">
-      Stay foolish, Stay young
+      <b>&#12288&#8194Stay foolish, Stay hungry</b>
     </div>
     <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+      &#12288&#8194苏ICP备17070021号<br><br>
+©️Copyright 2019 Masa, Powered by Gridea 
     </div>
   </div>
 </div>
@@ -91,29 +127,20 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">About Me</h2>
+            <h2 class="post-title">About</h2>
+            
             <div class="post-content">
-              <h1 id="about一级标题">About一级标题</h1>
-				<p>正文部分</p>
-				<h2 id="about-me-二级标题">About Me 二级标题</h2>
-				<p><strong>加粗</strong>
-				<em>斜杠</em></p>
-				<blockquote>
-				<p>引用</p>
-				</blockquote>
-				<pre><code>代码块
-				</code></pre>
-				<ul>
-				<li>列表</li>
-				<li>列表</li>
-				</ul>
-				<ol>
-				<li>列表2</li>
-				</ol>
-				<!-- more -->
-				<p>这里是摘要</p>
-
+              <p>我是Masa，这是我用开源工具<a href="https://gridea.dev">Gridea</a>搭建的博客。</p>
+               <!-- more -->
+              <p>搭建这个博客的初衷是记录一些自己日常碰见的技术问题和解决方案，如果你注意到了某些错误，欢迎在issue或者评论区留言，谢谢！</p>
             </div>
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
           </div>
 
         </div>
@@ -136,6 +163,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f7aa39694fe645b3f30a',
+        clientSecret: 'd24006781030742dfe57b7bf55e971a0303a4b31',
+        repo: 'nuistcz.github.io',
+        owner: 'nuistcz',
+        admin: ['nuistcz'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
