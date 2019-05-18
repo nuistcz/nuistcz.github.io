@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>PyTroch学习路径 | Masa</title>
+<meta name="description" content="&lt;b&gt;&amp;#12288&amp;#8194Stay foolish, Stay hungry&lt;/b&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://nuistcz.github.io/favicon.ico?v=1558194657425">
+<link rel="stylesheet" href="https://nuistcz.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123943100-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123943100-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://nuistcz.github.io">
+        <img src="https://nuistcz.github.io/images/avatar.png?v=1558194657425" class="site-logo">
+        <h1 class="site-title">Masa</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="github.com/nuistcz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://twitter.com/JustMasaa" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/1797461315/profile?topnav=1&amp;wvr=6&amp;is_all=1" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://www.zhihu.com/people/cao-zheng-26-67/activities" target="_blank">
+            <i class="fab fa-zhihu"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://www.facebook.com/caoz123" target="_blank">
+            <i class="fab fa-facebook"></i>
+          </a>
+        
+      
+    </div>
+    <div class="site-description">
+      <b>&#12288&#8194Stay foolish, Stay hungry</b>
+    </div>
+    <div class="site-footer">
+      &#12288&#8194苏ICP备17070021号<br><br>
+©️Copyright 2019 Masa, Powered by Gridea 
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">PyTroch学习路径</h2>
+            <div class="post-date">2019-05-17</div>
+            
+            <div class="post-content">
+              <p>目录：</p>
+<ul>
+<li><a href="#PyTorch%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C">PyTorch学习教程、手册</a></li>
+<li><a href="#PyTorch%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B">PyTorch视频教程</a></li>
+<li><a href="#NLPPyTorch%E5%AE%9E%E6%88%98">NLP&amp;PyTorch实战</a></li>
+<li><a href="#CVPyTorch%E5%AE%9E%E6%88%98">CV&amp;PyTorch实战</a></li>
+<li><a href="#PyTorch%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90">PyTorch论文推荐</a></li>
+<li><a href="#PyTorch%E4%B9%A6%E7%B1%8D%E6%8E%A8%E8%8D%90">Pytorch书籍推荐</a></li>
+</ul>
+<!-- more --> 
+<h2 id="pytorch学习教程-手册">PyTorch学习教程、手册</h2>
+<ul>
+<li><a href="https://pytorch.org/tutorials/">PyTorch英文版官方手册</a>：对于英文比较好的同学，非常推荐该PyTorch官方文档，一步步带你从入门到精通。该文档详细的介绍了从基础知识到如何使用PyTorch构建深层神经网络，以及PyTorch语法和一些高质量的案例。</li>
+<li><a href="https://pytorch-cn.readthedocs.io/zh/latest/">PyTorch中文官方文档</a>：阅读上述英文文档比较困难的同学也不要紧，我们为大家准备了比较官方的PyTorch中文文档，文档非常详细的介绍了各个函数，可作为一份PyTorch的速查宝典。</li>
+<li><a href="https://github.com/yunjey/pytorch-tutorial">比较偏算法实战的PyTorch代码教程</a>：在github上有很高的star。建议大家在阅读本文档之前，先学习上述两个PyTorch基础教程。</li>
+<li><a href="https://github.com/zergtant/pytorch-handbook">开源书籍</a>：这是一本开源的书籍，目标是帮助那些希望和使用PyTorch进行深度学习开发和研究的朋友快速入门。但本文档不是内容不是很全，还在持续更新中。</li>
+<li><a href="https://github.com/fendouai/pytorch1.0-cn">简单易上手的PyTorch中文文档</a>：非常适合新手学习。该文档从介绍什么是PyTorch开始，到神经网络、PyTorch的安装，再到图像分类器、数据并行处理，非常详细的介绍了PyTorch的知识体系，适合新手的学习入门。该文档的官网：<a href="http://pytorchchina.com">http://pytorchchina.com</a> 。</li>
+</ul>
+<h2 id="pytorch视频教程">PyTorch视频教程</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/av31914351/">B站PyTorch视频教程</a>：首推的是B站中近期点击率非常高的一个PyTorch视频教程，虽然视频内容只有八集，但讲的深入浅出，十分精彩。只是没有中文字幕，小伙伴们是该练习一下英文了...</li>
+<li><a href="https://www.youtube.com/watch?v=SKq-pmkekTk">国外视频教程</a>：另外一个国外大佬的视频教程，在YouTube上有很高的点击率，也是纯英文的视频，有没有觉得外国的教学视频不管是多么复杂的问题都能讲的很形象很简单？</li>
+<li><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/">莫烦</a>：相信莫烦老师大家应该很熟了，他的Python、深度学习的系列视频在B站和YouTube上均有很高的点击率，该PyTorch视频教程也是去年刚出不久，推荐给新手朋友。</li>
+<li><a href="https://www.bilibili.com/video/av49008640/">101学院</a>：人工智能101学院的PyTorch系列视频课程，讲的比较详细、覆盖的知识点也比较广，感兴趣的朋友可以试听一下。</li>
+<li><a href="https://www.julyedu.com/course/getDetail/140/">七月在线</a>：最后，向大家推荐的是国内领先的人工智能教育平台——七月在线的PyTorch入门与实战系列课。课程虽然是收费课程，但课程包含PyTorch语法、深度学习基础、词向量基础、NLP和CV的项目应用、实战等，理论和实战相结合，确实比其它课程讲的更详细，推荐给大家。</li>
+</ul>
+<h2 id="nlppytorch实战">NLP&amp;PyTorch实战</h2>
+<ul>
+<li><a href="https://github.com/pytorch/text">Pytorch text</a>：Torchtext是一个非常好用的库，可以帮助我们很好的解决文本的预处理问题。此github存储库包含两部分：
+<ul>
+<li>torchText.data：文本的通用数据加载器、抽象和迭代器（包括词汇和词向量）</li>
+<li>torchText.datasets：通用NLP数据集的预训练加载程序
+我们只需要通过pip install torchtext安装好torchtext后，便可以开始体验Torchtext 的种种便捷之处。</li>
+</ul>
+</li>
+<li><a href="https://github.com/IBM/pytorch-seq2seq">Pytorch-Seq2seq</a>：Seq2seq是一个快速发展的领域，新技术和新框架经常在此发布。这个库是在PyTorch中实现的Seq2seq模型的框架，该框架为Seq2seq模型的训练和预测等都提供了模块化和可扩展的组件，此github项目是一个基础版本，目标是促进这些技术和应用程序的开发。</li>
+<li><a href="https://github.com/kamalkraj/BERT-NER">BERT NER</a>：BERT是2018年google 提出来的预训练语言模型，自其诞生后打破了一系列的NLP任务，所以其在nlp的领域一直具有很重要的影响力。该github库是BERT的PyTorch版本，内置了很多强大的预训练模型，使用时非常方便、易上手。</li>
+<li><a href="https://github.com/pytorch/fairseq">Fairseq</a>：Fairseq是一个序列建模工具包，允许研究人员和开发人员为翻译、总结、语言建模和其他文本生成任务训练自定义模型，它还提供了各种Seq2seq模型的参考实现。该github存储库包含有关入门、训练新模型、使用新模型和任务扩展Fairseq的说明，对该模型感兴趣的小伙伴可以点击上方链接学习。</li>
+<li><a href="https://github.com/outcastofmusic/quick-nlp">Quick-nlp</a>：Quick-nlp是一个深受fast.ai库启发的深入学习Nlp库。它遵循与Fastai相同的API，并对其进行了扩展，允许快速、轻松地运行NLP模型。</li>
+<li><a href="https://github.com/OpenNMT/OpenNMT-py">OpenNMT-py</a>：这是OpenNMT的一个PyTorch实现，一个开放源码的神经网络机器翻译系统。它的设计是为了便于研究，尝试新的想法，以及在翻译，总结，图像到文本，形态学等许多领域中尝试新的想法。一些公司已经证明该代码可以用于实际的工业项目中，更多关于这个github的详细信息请参阅以上链接。</li>
+</ul>
+<h2 id="cvpytorch实战">CV&amp;PyTorch实战</h2>
+<ul>
+<li><a href="https://github.com/pytorch/vision">pytorch vision</a>：Torchvision是独立于pytorch的关于图像操作的一些方便工具库。主要包括：vision.datasets 、vision.models、vision.transforms、vision.utils 几个包，安装和使用都非常简单，感兴趣的小伙伴们可以参考以上链接。</li>
+<li><a href="https://github.com/thnkim/OpenFacePytorch">OpenFacePytorch</a>：此github库是OpenFace在Pytorch中的实现，代码要求输入的图像要与原始OpenFace相同的方式对齐和裁剪。</li>
+<li><a href="https://github.com/donnyyou/torchcv">TorchCV</a>：TorchCV是一个基于PyTorch的计算机视觉深度学习框架，支持大部分视觉任务训练和部署，此github库为大多数基于深度学习的CV问题提供源代码，对CV方向感兴趣的小伙伴还在等什么？</li>
+<li><a href="https://github.com/creafz/pytorch-cnn-finetune">Pytorch-cnn-finetune</a>：该github库是利用pytorch对预训练卷积神经网络进行微调，支持的架构和模型包括：ResNet 、DenseNet、Inception v3 、VGG、SqueezeNet 、AlexNet 等。</li>
+<li><a href="https://github.com/tymokvo/pt-styletransfer#pt-styletransfer">Pt-styletransfer</a>：这个github项目是Pytorch中的神经风格转换，具体有以下几个需要注意的地方：
+<ul>
+<li>StyleTransferNet作为可由其他脚本导入的类；</li>
+<li>支持VGG（这是在PyTorch中提供预训练的VGG模型之前）</li>
+<li>可保存用于显示的中间样式和内容目标的功能</li>
+<li>可作为图像检查图矩阵的函数</li>
+<li>自动样式、内容和产品图像保存</li>
+<li>一段时间内损失的Matplotlib图和超参数记录，以跟踪有利的结果</li>
+</ul>
+</li>
+<li><a href="https://github.com/1adrianb/face-alignment#face-recognition">Face-alignment</a>：Face-alignment是一个用 pytorch 实现的 2D 和 3D 人脸对齐库，使用世界上最准确的面对齐网络从 Python 检测面部地标，能够在2D和3D坐标中检测点。该github库详细的介绍了使用Face-alignment进行人脸对齐的基本流程，欢迎感兴趣的同学学习。</li>
+</ul>
+<h2 id="pytorch论文推荐">PyTorch论文推荐</h2>
+<ul>
+<li><a href="https://github.com/neuralix/google_evolution">Google_evolution</a>：该论文实现了实现了由Esteban Real等人提出的图像分类器大规模演化的结果网络。在实验之前，需要我们安装好PyTorch、 Scikit-learn以及下载好 <a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR10 dataset数据集</a>。</li>
+<li><a href="https://github.com/onlytailei/Value-Iteration-Networks-PyTorch">PyTorch-value-iteration-networks</a>：该论文基于作者最初的Theano实现和Abhishek Kumar的Tensoflow实现，包含了在PyTorch中实现价值迭代网络（VIN）。Vin在NIPS 2016年获得最佳论文奖。</li>
+<li><a href="https://github.com/kefirski/pytorch_Highway">Pytorch Highway</a>：Highway Netowrks是允许信息高速无阻碍的通过各层，它是从Long Short Term Memory(LSTM) recurrent networks中的gate机制受到启发，可以让信息无阻碍的通过许多层，达到训练深层神经网络的效果，使深层神经网络不在仅仅具有浅层神经网络的效果。该论文是Highway network基于Pytorch的实现。</li>
+<li><a href="https://github.com/edouardoyallon/pyscatwave">Pyscatwave</a>：Cupy/Pythorn的散射实现。散射网络是一种卷积网络，它的滤波器被预先定义为子波，不需要学习，可以用于图像分类等视觉任务。散射变换可以显著降低输入的空间分辨率（例如224x224-&gt;14x14），且双关功率损失明显为负。</li>
+<li><a href="https://github.com/kefirski/pytorch_NEG_loss">Pytorch_NEG_loss</a>：该论文是Negative Sampling Loss的Pytorch实现。Negative Sampling是一种求解word2vec模型的方法，它摒弃了霍夫曼树，采用了Negative Sampling（负采样）的方法来求解，本论文是对Negative Sampling的loss函数的研究，感兴趣的小伙伴可点击上方论文链接学习。</li>
+<li><a href="https://github.com/kefirski/pytorch_TDNN">Pytorch_TDNN</a>：该论文是对Time Delayed NN的Pytorch实现。论文详细的讲述了TDNN的原理以及实现过程。</li>
+</ul>
+<h2 id="pytorch书籍推荐">PyTorch书籍推荐</h2>
+<p>相较于目前Tensorflow类型的书籍已经烂大街的状况，PyTorch类的书籍目前已出版的并没有那么多，笔者给大家推荐我认为还不错的四本PyTorch书籍。</p>
+<ul>
+<li><strong>《深度学习入门之PyTorch》</strong>，电子工业出版社，作者：廖星宇。这本《深度学习入门之PyTorch》是所有PyTorch书籍中出版的相对较早的一本，作者以自己的小白入门深度学习之路，深入浅出的讲解了PyTorch的语法、原理以及实战等内容，适合新手的入门学习。但不足的是，书中有很多不严谨以及生搬硬套的地方，需要读者好好甄别。
+推荐指数：★★★</li>
+<li><strong>《PyTorch深度学习》</strong>，人民邮电出版社，作者：王海玲、刘江峰。该书是一本英译书籍，原作者是两位印度的大佬，该书除了PyTorch基本语法、函数外，还涵盖了ResNET、Inception、DenseNet等在内的高级神经网络架构以及它们的应用案例。该书适合数据分析师、数据科学家等相对有一些理论基础和实战经验的读者学习，不太建议作为新手的入门选择。
+推荐指数：★★★</li>
+<li><strong>《深度学习框架PyTorch入门与实践》</strong>，电子工业出版社，作者：陈云。这是一本2018年上市的PyTorch书籍，包含理论入门和实战项目两大部分，相较于其它同类型书籍，该书案例非常的翔实，包括：Kaggle竞赛中经典项目、GAN生成动漫头像、AI滤镜、RNN写诗、图像描述任务等。理论+实战的内容设置也更适合深度学习入门者和从业者学习。
+推荐指数：★★★★</li>
+<li><strong>《PyTorch机器学习从入门到实战》</strong>，机械工业出版社，作者：校宝在线、孙琳等。该书同样是一本理论结合实战的Pytorch教程，相较于前一本入门+实战教程，本书的特色在于关于深度学习的理论部分讲的非常详细，后边的实战项目更加的综合。总体而言，本书也是一本适合新手学习的不错的PyTorch入门书籍。
+推荐指数：★★★</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://nuistcz.github.io/tag/python" class="tag">
+                    Python
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://nuistcz.github.io/post/Python_underscores">
+                  <h3 class="post-title">
+                    Python的下划线用法
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f7aa39694fe645b3f30a',
+        clientSecret: 'd24006781030742dfe57b7bf55e971a0303a4b31',
+        repo: 'nuistcz.github.io',
+        owner: 'nuistcz',
+        admin: ['nuistcz'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
