@@ -1,0 +1,1176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://nuistcz.github.io</id>
+    <title>Masa</title>
+    <updated>2019-07-24T07:08:20.414Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://nuistcz.github.io"/>
+    <link rel="self" href="https://nuistcz.github.io/atom.xml"/>
+    <subtitle>&lt;b&gt;&amp;#12288&amp;#8194Stay foolish, Stay hungry&lt;/b&gt;</subtitle>
+    <logo>https://nuistcz.github.io/images/avatar.png</logo>
+    <icon>https://nuistcz.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2019, Masa</rights>
+    <entry>
+        <title type="html"><![CDATA[使用Rsync同步文件]]></title>
+        <id>https://nuistcz.github.io/post/rsync001</id>
+        <link href="https://nuistcz.github.io/post/rsync001">
+        </link>
+        <updated>2019-05-29T02:23:58.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="rsync">Rsync</h3>
+<p>rsync命令是一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。rsync使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="rsync">Rsync</h3>
+<p>rsync命令是一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。rsync使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。</p>
+ <!-- more -->
+<h4 id="usage">Usage</h4>
+<pre><code>rsync [OPTION]... SRC DEST
+rsync [OPTION]... SRC [USER@]host:DEST
+rsync [OPTION]... [USER@]HOST:SRC DEST
+rsync [OPTION]... [USER@]HOST::SRC DEST
+rsync [OPTION]... SRC [USER@]HOST::DEST
+rsync [OPTION]... rsync://[USER@]HOST[:PORT]/SRC [DEST]
+</code></pre>
+<p>对应于以上六种命令格式，rsync有六种不同的工作模式：</p>
+<p>拷贝本地文件。当SRC和DES路径信息都不包含有单个冒号&quot;:&quot;分隔符时就启动这种工作模式。如：rsync -a /data /backup
+使用一个远程shell程序(如rsh、ssh)来实现将本地机器的内容拷贝到远程机器。当DST路径地址包含单个冒号&quot;:&quot;分隔符时启动该模式。如：rsync -avz *.c foo:src
+使用一个远程shell程序(如rsh、ssh)来实现将远程机器的内容拷贝到本地机器。当SRC地址路径包含单个冒号&quot;:&quot;分隔符时启动该模式。如：rsync -avz foo:src/bar /data
+从远程rsync服务器中拷贝文件到本地机。当SRC路径信息包含&quot;::&quot;分隔符时启动该模式。如：rsync -av root@192.168.78.192::www /databack
+从本地机器拷贝文件到远程rsync服务器中。当DST路径信息包含&quot;::&quot;分隔符时启动该模式。如：rsync -av /databack root@192.168.78.192::www
+列远程机的文件列表。这类似于rsync传输，不过只要在命令中省略掉本地机信息即可。如：rsync -v rsync://192.168.78.192/www</p>
+<h4 id="port-configuration">Port Configuration</h4>
+<p><code>rsync -rvz -e 'ssh -p Port' --progress --remove-sent-files ./localpath root@remotehost:2345/remotepath</code>
+https://www.centos.bz/2013/09/ssh-port-rsync/</p>
+<h4 id="full-configuration-list">Full Configuration List</h4>
+<pre><code class="language-python">-v, --verbose 详细模式输出。
+-q, --quiet 精简输出模式。
+-c, --checksum 打开校验开关，强制对文件传输进行校验。
+-a, --archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD。
+-r, --recursive 对子目录以递归模式处理。
+-R, --relative 使用相对路径信息。
+-b, --backup 创建备份，也就是对于目的已经存在有同样的文件名时，将老的文件重新命名为~filename。可以使用--suffix选项来指定不同的备份文件前缀。
+--backup-dir 将备份文件(如~filename)存放在在目录下。
+-suffix=SUFFIX 定义备份文件前缀。
+-u, --update 仅仅进行更新，也就是跳过所有已经存在于DST，并且文件时间晚于要备份的文件，不覆盖更新的文件。
+-l, --links 保留软链结。
+-L, --copy-links 想对待常规文件一样处理软链结。
+--copy-unsafe-links 仅仅拷贝指向SRC路径目录树以外的链结。
+--safe-links 忽略指向SRC路径目录树以外的链结。
+-H, --hard-links 保留硬链结。
+-p, --perms 保持文件权限。
+-o, --owner 保持文件属主信息。
+-g, --group 保持文件属组信息。
+-D, --devices 保持设备文件信息。
+-t, --times 保持文件时间信息。
+-S, --sparse 对稀疏文件进行特殊处理以节省DST的空间。
+-n, --dry-run现实哪些文件将被传输。
+-w, --whole-file 拷贝文件，不进行增量检测。
+-x, --one-file-system 不要跨越文件系统边界。
+-B, --block-size=SIZE 检验算法使用的块尺寸，默认是700字节。
+-e, --rsh=command 指定使用rsh、ssh方式进行数据同步。
+--rsync-path=PATH 指定远程服务器上的rsync命令所在路径信息。
+-C, --cvs-exclude 使用和CVS一样的方法自动忽略文件，用来排除那些不希望传输的文件。
+--existing 仅仅更新那些已经存在于DST的文件，而不备份那些新创建的文件。
+--delete 删除那些DST中SRC没有的文件。
+--delete-excluded 同样删除接收端那些被该选项指定排除的文件。
+--delete-after 传输结束以后再删除。
+--ignore-errors 及时出现IO错误也进行删除。
+--max-delete=NUM 最多删除NUM个文件。
+--partial 保留那些因故没有完全传输的文件，以是加快随后的再次传输。
+--force 强制删除目录，即使不为空。
+--numeric-ids 不将数字的用户和组id匹配为用户名和组名。
+--timeout=time ip超时时间，单位为秒。
+-I, --ignore-times 不跳过那些有同样的时间和长度的文件。
+--size-only 当决定是否要备份文件时，仅仅察看文件大小而不考虑文件时间。
+--modify-window=NUM 决定文件是否时间相同时使用的时间戳窗口，默认为0。
+-T --temp-dir=DIR 在DIR中创建临时文件。
+--compare-dest=DIR 同样比较DIR中的文件来决定是否需要备份。
+-P 等同于 --partial。
+--progress 显示备份过程。
+-z, --compress 对备份的文件在传输时进行压缩处理。
+--exclude=PATTERN 指定排除不需要传输的文件模式。
+--include=PATTERN 指定不排除而需要传输的文件模式。
+--exclude-from=FILE 排除FILE中指定模式的文件。
+--include-from=FILE 不排除FILE指定模式匹配的文件。
+--version 打印版本信息。
+--address 绑定到特定的地址。
+--config=FILE 指定其他的配置文件，不使用默认的rsyncd.conf文件。
+--port=PORT 指定其他的rsync服务端口。
+--blocking-io 对远程shell使用阻塞IO。
+-stats 给出某些文件的传输状态。
+--progress 在传输时现实传输过程。
+--log-format=formAT 指定日志文件格式。
+--password-file=FILE 从FILE中得到密码。
+--bwlimit=KBPS 限制I/O带宽，KBytes per second。
+-h, --help 显示帮助信息。
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[PyTroch学习路径]]></title>
+        <id>https://nuistcz.github.io/post/PyTorch_tutorial</id>
+        <link href="https://nuistcz.github.io/post/PyTorch_tutorial">
+        </link>
+        <updated>2019-05-16T19:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>目录：</p>
+<ul>
+<li><a href="#PyTorch%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C">PyTorch学习教程、手册</a></li>
+<li><a href="#PyTorch%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B">PyTorch视频教程</a></li>
+<li><a href="#NLPPyTorch%E5%AE%9E%E6%88%98">NLP&amp;PyTorch实战</a></li>
+<li><a href="#CVPyTorch%E5%AE%9E%E6%88%98">CV&amp;PyTorch实战</a></li>
+<li><a href="#PyTorch%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90">PyTorch论文推荐</a></li>
+<li><a href="#PyTorch%E4%B9%A6%E7%B1%8D%E6%8E%A8%E8%8D%90">Pytorch书籍推荐</a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<p>目录：</p>
+<ul>
+<li><a href="#PyTorch%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C">PyTorch学习教程、手册</a></li>
+<li><a href="#PyTorch%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B">PyTorch视频教程</a></li>
+<li><a href="#NLPPyTorch%E5%AE%9E%E6%88%98">NLP&amp;PyTorch实战</a></li>
+<li><a href="#CVPyTorch%E5%AE%9E%E6%88%98">CV&amp;PyTorch实战</a></li>
+<li><a href="#PyTorch%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90">PyTorch论文推荐</a></li>
+<li><a href="#PyTorch%E4%B9%A6%E7%B1%8D%E6%8E%A8%E8%8D%90">Pytorch书籍推荐</a></li>
+</ul>
+<!-- more --> 
+<h2 id="pytorch学习教程-手册">PyTorch学习教程、手册</h2>
+<ul>
+<li><a href="https://pytorch.org/tutorials/">PyTorch英文版官方手册</a>：对于英文比较好的同学，非常推荐该PyTorch官方文档，一步步带你从入门到精通。该文档详细的介绍了从基础知识到如何使用PyTorch构建深层神经网络，以及PyTorch语法和一些高质量的案例。</li>
+<li><a href="https://pytorch-cn.readthedocs.io/zh/latest/">PyTorch中文官方文档</a>：阅读上述英文文档比较困难的同学也不要紧，我们为大家准备了比较官方的PyTorch中文文档，文档非常详细的介绍了各个函数，可作为一份PyTorch的速查宝典。</li>
+<li><a href="https://github.com/yunjey/pytorch-tutorial">比较偏算法实战的PyTorch代码教程</a>：在github上有很高的star。建议大家在阅读本文档之前，先学习上述两个PyTorch基础教程。</li>
+<li><a href="https://github.com/zergtant/pytorch-handbook">开源书籍</a>：这是一本开源的书籍，目标是帮助那些希望和使用PyTorch进行深度学习开发和研究的朋友快速入门。但本文档不是内容不是很全，还在持续更新中。</li>
+<li><a href="https://github.com/fendouai/pytorch1.0-cn">简单易上手的PyTorch中文文档</a>：非常适合新手学习。该文档从介绍什么是PyTorch开始，到神经网络、PyTorch的安装，再到图像分类器、数据并行处理，非常详细的介绍了PyTorch的知识体系，适合新手的学习入门。该文档的官网：<a href="http://pytorchchina.com">http://pytorchchina.com</a> 。</li>
+</ul>
+<h2 id="pytorch视频教程">PyTorch视频教程</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/av31914351/">B站PyTorch视频教程</a>：首推的是B站中近期点击率非常高的一个PyTorch视频教程，虽然视频内容只有八集，但讲的深入浅出，十分精彩。只是没有中文字幕，小伙伴们是该练习一下英文了...</li>
+<li><a href="https://www.youtube.com/watch?v=SKq-pmkekTk">国外视频教程</a>：另外一个国外大佬的视频教程，在YouTube上有很高的点击率，也是纯英文的视频，有没有觉得外国的教学视频不管是多么复杂的问题都能讲的很形象很简单？</li>
+<li><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/">莫烦</a>：相信莫烦老师大家应该很熟了，他的Python、深度学习的系列视频在B站和YouTube上均有很高的点击率，该PyTorch视频教程也是去年刚出不久，推荐给新手朋友。</li>
+<li><a href="https://www.bilibili.com/video/av49008640/">101学院</a>：人工智能101学院的PyTorch系列视频课程，讲的比较详细、覆盖的知识点也比较广，感兴趣的朋友可以试听一下。</li>
+<li><a href="https://www.julyedu.com/course/getDetail/140/">七月在线</a>：最后，向大家推荐的是国内领先的人工智能教育平台——七月在线的PyTorch入门与实战系列课。课程虽然是收费课程，但课程包含PyTorch语法、深度学习基础、词向量基础、NLP和CV的项目应用、实战等，理论和实战相结合，确实比其它课程讲的更详细，推荐给大家。</li>
+</ul>
+<h2 id="nlppytorch实战">NLP&amp;PyTorch实战</h2>
+<ul>
+<li><a href="https://github.com/pytorch/text">Pytorch text</a>：Torchtext是一个非常好用的库，可以帮助我们很好的解决文本的预处理问题。此github存储库包含两部分：
+<ul>
+<li>torchText.data：文本的通用数据加载器、抽象和迭代器（包括词汇和词向量）</li>
+<li>torchText.datasets：通用NLP数据集的预训练加载程序
+我们只需要通过pip install torchtext安装好torchtext后，便可以开始体验Torchtext 的种种便捷之处。</li>
+</ul>
+</li>
+<li><a href="https://github.com/IBM/pytorch-seq2seq">Pytorch-Seq2seq</a>：Seq2seq是一个快速发展的领域，新技术和新框架经常在此发布。这个库是在PyTorch中实现的Seq2seq模型的框架，该框架为Seq2seq模型的训练和预测等都提供了模块化和可扩展的组件，此github项目是一个基础版本，目标是促进这些技术和应用程序的开发。</li>
+<li><a href="https://github.com/kamalkraj/BERT-NER">BERT NER</a>：BERT是2018年google 提出来的预训练语言模型，自其诞生后打破了一系列的NLP任务，所以其在nlp的领域一直具有很重要的影响力。该github库是BERT的PyTorch版本，内置了很多强大的预训练模型，使用时非常方便、易上手。</li>
+<li><a href="https://github.com/pytorch/fairseq">Fairseq</a>：Fairseq是一个序列建模工具包，允许研究人员和开发人员为翻译、总结、语言建模和其他文本生成任务训练自定义模型，它还提供了各种Seq2seq模型的参考实现。该github存储库包含有关入门、训练新模型、使用新模型和任务扩展Fairseq的说明，对该模型感兴趣的小伙伴可以点击上方链接学习。</li>
+<li><a href="https://github.com/outcastofmusic/quick-nlp">Quick-nlp</a>：Quick-nlp是一个深受fast.ai库启发的深入学习Nlp库。它遵循与Fastai相同的API，并对其进行了扩展，允许快速、轻松地运行NLP模型。</li>
+<li><a href="https://github.com/OpenNMT/OpenNMT-py">OpenNMT-py</a>：这是OpenNMT的一个PyTorch实现，一个开放源码的神经网络机器翻译系统。它的设计是为了便于研究，尝试新的想法，以及在翻译，总结，图像到文本，形态学等许多领域中尝试新的想法。一些公司已经证明该代码可以用于实际的工业项目中，更多关于这个github的详细信息请参阅以上链接。</li>
+</ul>
+<h2 id="cvpytorch实战">CV&amp;PyTorch实战</h2>
+<ul>
+<li><a href="https://github.com/pytorch/vision">pytorch vision</a>：Torchvision是独立于pytorch的关于图像操作的一些方便工具库。主要包括：vision.datasets 、vision.models、vision.transforms、vision.utils 几个包，安装和使用都非常简单，感兴趣的小伙伴们可以参考以上链接。</li>
+<li><a href="https://github.com/thnkim/OpenFacePytorch">OpenFacePytorch</a>：此github库是OpenFace在Pytorch中的实现，代码要求输入的图像要与原始OpenFace相同的方式对齐和裁剪。</li>
+<li><a href="https://github.com/donnyyou/torchcv">TorchCV</a>：TorchCV是一个基于PyTorch的计算机视觉深度学习框架，支持大部分视觉任务训练和部署，此github库为大多数基于深度学习的CV问题提供源代码，对CV方向感兴趣的小伙伴还在等什么？</li>
+<li><a href="https://github.com/creafz/pytorch-cnn-finetune">Pytorch-cnn-finetune</a>：该github库是利用pytorch对预训练卷积神经网络进行微调，支持的架构和模型包括：ResNet 、DenseNet、Inception v3 、VGG、SqueezeNet 、AlexNet 等。</li>
+<li><a href="https://github.com/tymokvo/pt-styletransfer#pt-styletransfer">Pt-styletransfer</a>：这个github项目是Pytorch中的神经风格转换，具体有以下几个需要注意的地方：
+<ul>
+<li>StyleTransferNet作为可由其他脚本导入的类；</li>
+<li>支持VGG（这是在PyTorch中提供预训练的VGG模型之前）</li>
+<li>可保存用于显示的中间样式和内容目标的功能</li>
+<li>可作为图像检查图矩阵的函数</li>
+<li>自动样式、内容和产品图像保存</li>
+<li>一段时间内损失的Matplotlib图和超参数记录，以跟踪有利的结果</li>
+</ul>
+</li>
+<li><a href="https://github.com/1adrianb/face-alignment#face-recognition">Face-alignment</a>：Face-alignment是一个用 pytorch 实现的 2D 和 3D 人脸对齐库，使用世界上最准确的面对齐网络从 Python 检测面部地标，能够在2D和3D坐标中检测点。该github库详细的介绍了使用Face-alignment进行人脸对齐的基本流程，欢迎感兴趣的同学学习。</li>
+</ul>
+<h2 id="pytorch论文推荐">PyTorch论文推荐</h2>
+<ul>
+<li><a href="https://github.com/neuralix/google_evolution">Google_evolution</a>：该论文实现了实现了由Esteban Real等人提出的图像分类器大规模演化的结果网络。在实验之前，需要我们安装好PyTorch、 Scikit-learn以及下载好 <a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR10 dataset数据集</a>。</li>
+<li><a href="https://github.com/onlytailei/Value-Iteration-Networks-PyTorch">PyTorch-value-iteration-networks</a>：该论文基于作者最初的Theano实现和Abhishek Kumar的Tensoflow实现，包含了在PyTorch中实现价值迭代网络（VIN）。Vin在NIPS 2016年获得最佳论文奖。</li>
+<li><a href="https://github.com/kefirski/pytorch_Highway">Pytorch Highway</a>：Highway Netowrks是允许信息高速无阻碍的通过各层，它是从Long Short Term Memory(LSTM) recurrent networks中的gate机制受到启发，可以让信息无阻碍的通过许多层，达到训练深层神经网络的效果，使深层神经网络不在仅仅具有浅层神经网络的效果。该论文是Highway network基于Pytorch的实现。</li>
+<li><a href="https://github.com/edouardoyallon/pyscatwave">Pyscatwave</a>：Cupy/Pythorn的散射实现。散射网络是一种卷积网络，它的滤波器被预先定义为子波，不需要学习，可以用于图像分类等视觉任务。散射变换可以显著降低输入的空间分辨率（例如224x224-&gt;14x14），且双关功率损失明显为负。</li>
+<li><a href="https://github.com/kefirski/pytorch_NEG_loss">Pytorch_NEG_loss</a>：该论文是Negative Sampling Loss的Pytorch实现。Negative Sampling是一种求解word2vec模型的方法，它摒弃了霍夫曼树，采用了Negative Sampling（负采样）的方法来求解，本论文是对Negative Sampling的loss函数的研究，感兴趣的小伙伴可点击上方论文链接学习。</li>
+<li><a href="https://github.com/kefirski/pytorch_TDNN">Pytorch_TDNN</a>：该论文是对Time Delayed NN的Pytorch实现。论文详细的讲述了TDNN的原理以及实现过程。</li>
+</ul>
+<h2 id="pytorch书籍推荐">PyTorch书籍推荐</h2>
+<p>相较于目前Tensorflow类型的书籍已经烂大街的状况，PyTorch类的书籍目前已出版的并没有那么多，笔者给大家推荐我认为还不错的四本PyTorch书籍。</p>
+<ul>
+<li><strong>《深度学习入门之PyTorch》</strong>，电子工业出版社，作者：廖星宇。这本《深度学习入门之PyTorch》是所有PyTorch书籍中出版的相对较早的一本，作者以自己的小白入门深度学习之路，深入浅出的讲解了PyTorch的语法、原理以及实战等内容，适合新手的入门学习。但不足的是，书中有很多不严谨以及生搬硬套的地方，需要读者好好甄别。
+推荐指数：★★★</li>
+<li><strong>《PyTorch深度学习》</strong>，人民邮电出版社，作者：王海玲、刘江峰。该书是一本英译书籍，原作者是两位印度的大佬，该书除了PyTorch基本语法、函数外，还涵盖了ResNET、Inception、DenseNet等在内的高级神经网络架构以及它们的应用案例。该书适合数据分析师、数据科学家等相对有一些理论基础和实战经验的读者学习，不太建议作为新手的入门选择。
+推荐指数：★★★</li>
+<li><strong>《深度学习框架PyTorch入门与实践》</strong>，电子工业出版社，作者：陈云。这是一本2018年上市的PyTorch书籍，包含理论入门和实战项目两大部分，相较于其它同类型书籍，该书案例非常的翔实，包括：Kaggle竞赛中经典项目、GAN生成动漫头像、AI滤镜、RNN写诗、图像描述任务等。理论+实战的内容设置也更适合深度学习入门者和从业者学习。
+推荐指数：★★★★</li>
+<li><strong>《PyTorch机器学习从入门到实战》</strong>，机械工业出版社，作者：校宝在线、孙琳等。该书同样是一本理论结合实战的Pytorch教程，相较于前一本入门+实战教程，本书的特色在于关于深度学习的理论部分讲的非常详细，后边的实战项目更加的综合。总体而言，本书也是一本适合新手学习的不错的PyTorch入门书籍。
+推荐指数：★★★</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python的下划线用法]]></title>
+        <id>https://nuistcz.github.io/post/Python_underscores</id>
+        <link href="https://nuistcz.github.io/post/Python_underscores">
+        </link>
+        <updated>2018-08-14T18:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>从 -<a href="http://igorsobreira.com/2010/09/16/difference-between-one-underline-and-two-underlines-in-python.html">Difference between _, __ and <strong>xx</strong> in Python</a> 搬运</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>从 -<a href="http://igorsobreira.com/2010/09/16/difference-between-one-underline-and-two-underlines-in-python.html">Difference between _, __ and <strong>xx</strong> in Python</a> 搬运</p>
+<!-- more -->
+<h2 id="_单下划线">“_”单下划线</h2>
+<p>Python中不存在真正的私有方法。为了实现类似于c++中私有方法，可以在类的方法或属性前加一个“_”单下划线，意味着该方法或属性不应该去调用，它并不属于API。
+在使用property时，经常出现这个问题：</p>
+<pre><code class="language-python">class BaseForm(StrAndUnicode):
+    ...
+    
+    def _get_errors(self):
+        &quot;Returns an ErrorDict for the data provided for the form&quot;
+        if self._errors is None:
+            self.full_clean()
+        return self._errors
+    
+    errors = property(_get_errors)
+</code></pre>
+<p>上面的代码片段来自于django源码（django/forms/forms.py）。这里的errors是一个属性，属于API的一部分，但是_get_errors是私有的，是不应该访问的，但可以通过errors来访问该错误结果。</p>
+<h2 id="__双下划线">“__”双下划线</h2>
+<p>这个双下划线更会造成更多混乱，但它并不是用来标识一个方法或属性是私有的，真正作用是用来避免子类覆盖其内容。</p>
+<p>让我们来看一个例子：</p>
+<pre><code class="language-python">class A(object): 
+    def __method(self): 
+        print &quot;I'm a method in A&quot; 
+    def method(self): 
+        self.__method() a = A() a.method()
+</code></pre>
+<p>输出是这样的：</p>
+<pre><code class="language-python">$ python example.py 
+I'm a method in A
+</code></pre>
+<p>很好，出现了预计的结果。</p>
+<p>我们给A添加一个子类，并重新实现一个__method：</p>
+<pre><code class="language-python">class B(A): 
+    def __method(self): 
+        print &quot;I'm a method in B&quot; 
+
+b = B() 
+b.method()
+</code></pre>
+<p>现在，结果是这样的：</p>
+<pre><code class="language-python">$ python example.py
+I'm a method in A
+</code></pre>
+<p>就像我们看到的一样，B.method()不能调用B.__method的方法。实际上，它是&quot;__&quot;两个下划线的功能的正常显示。</p>
+<p>因此，在我们创建一个以&quot;__&quot;两个下划线开始的方法时，这意味着这个方法不能被重写，它只允许在该类的内部中使用。</p>
+<p>在Python中如是做的？很简单，它只是把方法重命名了，如下：</p>
+<pre><code class="language-python">a = A()
+a._A__method()  # never use this!! please!
+$ python example.py 
+I'm a method in A
+</code></pre>
+<p>如果你试图调用a.__method，它还是无法运行的，就如上面所说，只可以在类的内部调用__method。</p>
+<h2 id="__xx__前后各双下划线">“__xx__”前后各双下划线</h2>
+<p>当你看到&quot;__this__&quot;的时，就知道不要调用它。为什么？因为它的意思是它是用于Python调用的，如下：</p>
+<pre><code>&gt;&gt;&gt; name = &quot;igor&quot; 
+&gt;&gt;&gt; name.__len__() 4 
+&gt;&gt;&gt; len(name) 4 
+&gt;&gt;&gt; number = 10 
+&gt;&gt;&gt; number.__add__(20) 30 
+&gt;&gt;&gt; number + 20 30
+</code></pre>
+<p>“__xx__”经常是操作符或本地函数调用的magic methods。在上面的例子中，提供了一种重写类的操作符的功能。</p>
+<p>在特殊的情况下，它只是python调用的hook。例如，__init__()函数是当对象被创建初始化时调用的;__new__()是用来创建实例。</p>
+<pre><code class="language-python">class CrazyNumber(object):
+    def __init__(self, n): 
+        self.n = n 
+    def __add__(self, other): 
+        return self.n - other 
+    def __sub__(self, other): 
+        return self.n + other 
+    def __str__(self): 
+        return str(self.n) 
+
+num = CrazyNumber(10) 
+print num # 10
+print num + 5 # 5
+print num - 20 # 30    
+</code></pre>
+<p>另一个例子</p>
+<pre><code class="language-python">class Room(object):
+    def __init__(self): 
+        self.people = [] 
+    def add(self, person): 
+        self.people.append(person) 
+    def __len__(self): 
+        return len(self.people)
+ 
+room = Room() 
+room.add(&quot;Igor&quot;) 
+print len(room) # 1
+</code></pre>
+<h1 id="conclusion">Conclusion</h1>
+<ul>
+<li>使用_one_underline来表示该方法或属性是私有的，不属于API；</li>
+<li>当创建一个用于python调用或一些特殊情况时，使用__two_underline__；</li>
+<li>使用__just_to_underlines，来避免子类的重写！</li>
+</ul>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/coder2012">cococo点点</a></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GAN for Medical Imaging]]></title>
+        <id>https://nuistcz.github.io/post/GAN for Medical Imaging</id>
+        <link href="https://nuistcz.github.io/post/GAN for Medical Imaging">
+        </link>
+        <updated>2018-08-13T12:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>For a complete list of GANs in general computer vision, please visit <a href="https://github.com/nightrome/really-awesome-gan">really-awesome-gan</a>.</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>For a complete list of GANs in general computer vision, please visit <a href="https://github.com/nightrome/really-awesome-gan">really-awesome-gan</a>.</p>
+<!-- more -->
+<h1 id="awesome-gan-for-medical-imaging">Awesome GAN for Medical Imaging</h1>
+<p>Collect from -<a href="https://github.com/xinario/awesome-gan-for-medical-imaging">xinario</a>.</p>
+<p>A curated list of awesome GAN resources in medical imaging, inspired by the other awesome-* initiatives.</p>
+<h2 id="overview">Overview</h2>
+<ul>
+<li><a href="#low-dose-ct-denoising">Low Dose CT Denoising</a></li>
+<li><a href="#segmentation">Segmentation</a></li>
+<li><a href="#detection">Detection</a></li>
+<li><a href="#medical-image-synthesis">Medical Image Synthesis</a></li>
+<li><a href="#reconstruction">Reconstruction</a></li>
+<li><a href="#classification">Classification</a></li>
+<li><a href="#others">Others</a></li>
+</ul>
+<h1 id="low-dose-ct-denoising">Low Dose CT Denoising</h1>
+<ul>
+<li>[Generative Adversarial Networks for Noise Reduction in Low-Dose CT]  <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;sciodt=0%2C5&amp;cites=18303813038948630123&amp;scipsc=&amp;q=Generative+Adversarial+Networks+for+Noise+Reduction+in+Low-Dose+CT&amp;btnG=">[scholar]</a> <a href="http://ieeexplore.ieee.org/document/7934380/">[TMI]</a></li>
+<li>[Low Dose CT Image Denoising Using a Generative Adversarial Network with Wasserstein Distance and Perceptual Loss] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Low+Dose+CT+Image+Denoising+Using+a+Generative+Adversarial+Network+with+Wasserstein+Distance+and+Perceptual+Loss&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1708.00961">[arXiv]</a></li>
+<li>[Sharpness-aware Low dose CT denoising using conditional generative adversarial network] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Sharpness-aware+Low+dose+CT+denoising+using+conditional+generative+adversarial+network&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1708.06453">[arXiv]</a> <a href="https://link.springer.com/article/10.1007/s10278-018-0056-0">[JDI]</a> <a href="https://github.com/xinario/SAGAN">[code]</a></li>
+<li>[Cycle Consistent Adversarial Denoising Network for Multiphase Coronary CT Angiography] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Cycle+Consistent+Adversarial+Denoising+Network+for+Multiphase+Coronary+CT+Angiography&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1806.09748">[arXiv]</a></li>
+<li>[Structure-sensitive Multi-scale Deep Neural Network for Low-Dose CT Denoising] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Structure-sensitive+Multi-scale+Deep+Neural+Network+for+Low-Dose+CT+Denoising&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1805.00587">[arXiv]</a></li>
+</ul>
+<h1 id="segmentation">Segmentation</h1>
+<ul>
+<li>[SegAN: Adversarial Network with Multi-scale L1 Loss for Medical Image Segmentation] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=SegAN%3A+Adversarial+Network+with+Multi-scale+L1+Loss+for+Medical+Image+Segmentation&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1706.01805">[arXiv]</a></li>
+<li>[Adversarial training and dilated convolutions for brain MRI segmentation] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+training+and+dilated+convolutions+for+brain+MRI+segmentation&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1707.03195">[arXiv]</a></li>
+<li>[Retinal Vessel Segmentation in Fundoscopic Images with Generative Adversarial Networks] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Retinal+Vessel+Segmentation+in+Fundoscopic+Images+with+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1706.09318">[arXiv]</a></li>
+<li>[Automatic Liver Segmentation Using an Adversarial Image-to-Image Network] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Automatic+Liver+Segmentation+Using+an+Adversarial+Image-to-Image+Network&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1707.08037">[arXiv]</a></li>
+<li>[Deep Adversarial Networks for Biomedical Image Segmentation Utilizing Unannotated Images] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Deep+Adversarial+Networks+for+Biomedical+Image+Segmentation+Utilizing+Unannotated+Images&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-66179-7_47">[MICCAI17]</a></li>
+<li>[SCAN: Structure Correcting Adversarial Network for Organ Segmentation in Chest X-rays] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=SCAN%3A+Structure+Correcting+Adversarial+Network+for+Organ+Segmentation+in+Chest+X-rays&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1703.08770">[arXiv]</a></li>
+<li>[Adversarial Deep Structured Nets for Mass Segmentation from Mammograms] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+Deep+Structured+Nets+for+Mass+Segmentation+from+Mammograms&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1710.09288">[arXiv]</a> <a href="https://github.com/wentaozhu/adversarial-deep-structural-networks">[code]</a></li>
+<li>[Adversarial Synthesis Learning Enables Segmentation Without Target Modality Ground Truth] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+Synthesis+Learning+Enables+Segmentation+Without+Target+Modality+Ground+Truth&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1712.07695">[arXiv]</a></li>
+<li>[Adversarial neural networks for basal membrane segmentation of microinvasive cervix carcinoma in histopathology images] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+neural+networks+for+basal+membrane+segmentation+of+microinvasive+cervix+carcinoma+in+histopathology+images&amp;btnG=">[scholar]</a> <a href="https://ieeexplore-ieee-org.cyber.usask.ca/abstract/document/8108952/">[ICMLC]</a></li>
+<li>[Unsupervised domain adaptation in brain lesion segmentation with adversarial networks] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+domain+adaptation+in+brain+lesion+segmentation+with+adversarial+networks&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-59050-9_47">[IPMI2017]</a></li>
+<li>[whole heart and great vessel segmentation with context aware generative adversarial network] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=whole+heart+and+great+vessel+segmentation+with+context+aware+generative+adversarial+network&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-662-56537-7_89">[BM]</a></li>
+<li>[Generative Adversarial Neural Networks for Pigmented and Non-Pigmented Skin Lesions Detection in Clinical Images] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+Adversarial+Neural+Networks+for+Pigmented+and+Non-Pigmented+Skin+Lesions+Detection+in+Clinical+Images&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/document/7968584/">[CSCS2017]</a></li>
+<li>[Generative Adversarial Networks to Segment Skin Lesions] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+Adversarial+Networks+to+Segment+Skin+Lesions&amp;btnG=">[scholar]</a> <a href="http://www.cs.sfu.ca/~hamarneh/ecopy/isbi2018b.pdf">[ISBI2018]</a></li>
+<li>[A conditional adversarial network for semantic segmentation of brain tumor] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Conditional+Adversarial+Network+for+Semantic+Segmentation+of+Brain+Tumo&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1708.05227">[arXiv]</a></li>
+<li>[Brain Tumor Segmentation Using an Adversarial Network] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Brain+Tumor+Segmentation+Using+an+Adversarial+Network&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-75238-9_11">[MICCAI Brainlesion workshop]</a></li>
+<li>[Joint Optic Disc and Cup Segmentation using Fully Convolutional and Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Joint+Optic+Disc+and+Cup+Segmentation+using+Fully+Convolutional+and+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-67561-9_19">[OMIA2017]</a></li>
+<li>[Splenomegaly Segmentation using Global Convolutional Kernels and Conditional Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Splenomegaly+Segmentation+using+Global+Convolutional+Kernels+and+Conditional+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/10574/1057409/Splenomegaly-segmentation-using-global-convolutional-kernels-and-conditional-generative-adversarial/10.1117/12.2293406.short?SSO=1">[SPIE MI]</a></li>
+<li>[CC-GAN A Robust Transfer-Learning Framework for HEp-2 Specimen Image Segmentation] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=CC-GAN+A+Robust+Transfer-Learning+Framework+for+HEp-2+Specimen+Image+Segmentation&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/abstract/document/8301400/">[TA]</a></li>
+<li>[Unsupervised Cross-Modality Domain Adaptation of ConvNets for Biomedical Image Segmentations with Adversarial Loss] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+Cross-Modality+Domain+Adaptation+of+ConvNets+for+Biomedical+Image+Segmentations+with+Adversarial+Loss&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.10916">[arXiv]</a></li>
+</ul>
+<h1 id="detection">Detection</h1>
+<ul>
+<li>[Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+Anomaly+Detection+with+Generative+Adversarial+Networks+to+Guide+Marker+Discovery&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1703.05921">[arXiv]</a></li>
+<li>[Generative adversarial networks for brain lesion detection] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+adversarial+networks+for+brain+lesion+detection&amp;btnG=">[scholar]</a> <a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/10133/1/Generative-adversarial-networks-for-brain-lesion-detection/10.1117/12.2254487.short">[JMI]</a></li>
+<li>[Adversarial Networks for the Detection of Aggressive Prostate Cancer] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=dversarial+Networks+for+the+Detection+of+Aggressive+Prostate+Cancer&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1702.08014">[arXiv]</a></li>
+<li>[Visual Feature Attribution using Wasserstein GANs] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Visual+Feature+Attribution+using+Wasserstein+GANs&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1711.08998">[arXiv]</a></li>
+<li>[Unsupervised Detection of Lesions in Brain MRI using constrained adversarial auto-encoders] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+Detection+of+Lesions+in+Brain+MRI+using+constrained+adversarial+auto-encoders&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1806.04972">[arXiv]</a></li>
+</ul>
+<h1 id="medical-image-synthesis">Medical Image Synthesis</h1>
+<ul>
+<li>[Medical Image Synthesis with Context-Aware Generative Adversarial Networks] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Medical+Image+Synthesis+with+Context-Aware+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1612.05362">[arXiv]</a></li>
+<li>[Medical Image Synthesis with Deep Convolutional Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Medical+Image+Synthesis+with+Deep+Convolutional+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/abstract/document/8310638/">[TBME]</a> (published vision of the above preprint)</li>
+<li>[Deep MR to CT Synthesis using Unpaired Data] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Deep+MR+to+CT+Synthesis+using+Unpaired+Data&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1708.01155">[arXiv]</a></li>
+<li>[Synthesizing Filamentary Structured Images with GANs] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Synthesizing+Filamentary+Structured+Images+with+GANs&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1706.02185">[arXiv]</a> <a href="https://web.bii.a-star.edu.sg/archive/machine_learning/Projects/filaStructObjs/Synthesis/downloads.html">[code]</a></li>
+<li>[Synthesizing retinal and neuronal images with generative adversarial nets] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Synthesizing+retinal+and+neuronal+images+with+generative+adversarial+nets&amp;btnG=">[scholar]</a> <a href="https://www.sciencedirect.com/science/article/pii/S1361841518304596">[MIA]</a> (published vision of the above preprint)</li>
+<li>[Synthesis of Positron Emission Tomography (PET) Images via Multi-channel Generative Adversarial Networks] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Synthesis+of+Positron+Emission+Tomography+%28PET%29+Images+via+Multi-channel+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> (GANs) <a href="https://arxiv.org/abs/1707.09747">[arXiv]</a></li>
+<li>[Freehand Ultrasound Image Simulation with Spatially-Conditioned Generative Adversarial Networks] <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Freehand+Ultrasound+Image+Simulation+with+Spatially-Conditioned+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1707.05392">[arXiv]</a></li>
+<li>[Synthetic Medical Images from Dual Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Synthetic+Medical+Images+from+Dual+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1709.01872">[arXiv]</a></li>
+<li>[Virtual PET Images from CT Data Using Deep Convolutional Networks: Initial Results] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Virtual+PET+Images+from+CT+Data+Using+Deep+Convolutional+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1707.09585">[arXiv]</a></li>
+<li>[Towards Adversarial Retinal Image Synthesis] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Towards+Adversarial+Retinal+Image+Synthesis&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1701.08974">[arXiv]</a></li>
+<li>[End-to-end Adversarial Retinal Image Synthesis] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=End-to-end+Adversarial+Retinal+Image+Synthesis&amp;btnG=">[scholar]</a> <a href="http://ieeexplore.ieee.org/abstract/document/8055572/">[TMI]</a> (published vision of the above preprint)</li>
+<li>[Adversarial Image Synthesis for Unpaired Multi-Modal Cardiac Data] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+Image+Synthesis+for+Unpaired+Multi-Modal+Cardiac+Data&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-68127-6_1">[SASHIMI 2017]</a></li>
+<li>[Biomedical Data Augmentation Using Generative Adversarial Neural Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Biomedical+Data+Augmentation+Using+Generative+Adversarial+Neural+Networks&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-68612-7_71">[ICANN 2017]</a></li>
+<li>[Towards Virtual H&amp;E Staining of Hyperspectral Lung Histology Images Using Conditional Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Towards+Virtual+H%26E+Staining+of+Hyperspectral+Lung+Histology+Images+Using+Conditional+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="http://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w1/Bayramoglu_Towards_Virtual_HE_ICCV_2017_paper.pdf">[ICCV2017 workshop]</a></li>
+<li>[How to Fool Radiologists with Generative Adversarial Networks? A Visual Turing Test for Lung Cancer Diagnosis] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=How+to+Fool+Radiologists+with+Generative+Adversarial+Networks%3F+A+Visual+Turing+Test+for+Lung+Cancer+Diagnosis&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1710.09762">[arXiv]</a></li>
+<li>[Unsupervised Reverse Domain Adaptation for Synthetic Medical Images via Adversarial Training] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+Reverse+Domain+Adaptation+for+Synthetic+Medical+Images+via+Adversarial+Training&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1711.06606">[arXiv]</a></li>
+<li>[Unsupervised Histopathology Image Synthesis] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+Histopathology+Image+Synthesis&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1712.05021">[arXiv]</a></li>
+<li>[Image Synthesis in Multi-Contrast MRI with Conditional Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Image+Synthesis+in+Multi-Contrast+MRI+with+Conditional+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1802.01221">[arXiv]</a></li>
+<li>[Translating and Segmenting Multimodal Medical Volumes with Cycle- and Shape-Consistency Generative Adversarial Network] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Translating+and+Segmenting+Multimodal+Medical+Volumes+with+Cycle-+and+Shape-Consistency+Generative+Adversarial+Network&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1802.09655">[arXiv]</a></li>
+<li>[MRI Image-to-Image Translation for Cross-Modality Image Registration and Segmentation] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=MRI+Image-to-Image+Translation+for+Cross-Modality+Image+Registration+and+Segmentation&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1801.06940">[arXiv]</a></li>
+<li>[Cross-modality image synthesis from unpaired data using CycleGAN: Effects of gradient consistency loss and training data size] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Cross-modality+image+synthesis+from+unpaired+data+using+CycleGAN%3A+Effects+of+gradient+consistency+loss+and+training+data+size&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1803.06629">[arXiv]</a></li>
+<li>[Cross-Modality Synthesis from CT to PET using FCN and GAN Networks for Improved Automated Lesion Detection] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Cross-Modality+Synthesis+from+CT+to+PET+using+FCN+and+GAN+Networks+for+Improved+Automated+Lesion+Detection&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1802.07846">[arXiv]</a></li>
+<li>[MelanoGANs: High Resolution Skin Lesion Synthesis with GANs] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=MelanoGANs%3A+High+Resolution+Skin+Lesion+Synthesis+with+GANs&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.04338">[arXiv]</a></li>
+<li>[Domain-adversarial neural networks to address the appearance variability of histopathology images] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Domain-adversarial+neural+networks+to+address+the+appearance+variability+of+histopathology+images&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1707.06183">[arXiv]</a></li>
+<li>[Neural Stain-Style Transfer Learning using GAN for Histopathological Images] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=https%3A%2F%2Farxiv.org%2Fabs%2F1710.08543&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1710.08543">[arXiv]</a></li>
+<li>[Generative Adversarial Training for MRA Image Synthesis Using Multi-Contrast MRI
+] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+Adversarial+Training+for+MRA+Image+Synthesis+Using+Multi-Contrast+MRI&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.04366">[arXiv]</a></li>
+<li>[Histopathology Stain-Color Normalization Using Generative Neural Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Histopathology+Stain-Color+Normalization+Using+Generative+Neural+Networks&amp;btnG=">[scholar]</a> <a href="https://openreview.net/pdf?id=SkjdxkhoG">[MIDL2018]</a></li>
+<li>[3D cGAN based cross-modality MR image synthesis for brain tumor segmentation] <a href="https://scholar.google.ca/scholar?q=3D+CGAN+BASED+CROSS-MODALITY+MR+IMAGE+SYNTHESIS+FOR+BRAIN+TUMOR+SEGMENTATION&amp;hl=en&amp;as_sdt=0&amp;as_vis=1&amp;oi=scholart">[scholar]</a> <a href="https://ieeexplore.ieee.org/abstract/document/8363653/">[ISBI2018]</a></li>
+<li>[Deep CT to MR Synthesis using Paired and Unpaired Data] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Deep+CT+to+MR+Synthesis+using+Paired+and+Unpaired+Data&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1805.10790">[arXiv]</a></li>
+<li>[GAN-based synthetic brain MR image generation] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=GAN-based+synthetic+brain+MR+image+generation&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/abstract/document/8363678/">[ISBI2018]</a></li>
+<li>[StainGAN: Stain Style Transfer for Digital Histological Images] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=https%3A%2F%2Farxiv.org%2Fabs%2F1804.01601&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.01601">[arXiv]</a></li>
+<li>[Adversarial Stain Transfer for Histopathology Image Analysis] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+Stain+Transfer+for+Histopathology+Image+Analysis&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/document/8170242/">[TMI]</a></li>
+<li>[Chest x-ray generation and data augmentation for cardiovascular abnormality classification] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Chest+x-ray+generation+and+data+augmentation+for+cardiovascular+abnormality+classification&amp;btnG=">[scholar]</a> <a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/10574/105741M/Chest-x-ray-generation-and-data-augmentation-for-cardiovascular-abnormality/10.1117/12.2293971.short?SSO=1">[SPIE MI2018]</a></li>
+<li>[blood vessel geometry synthesis using generative adversarial networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=blood+vessel+geometry+synthesis+using+generative+adversarial+networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.04381">[MIDL2018]</a></li>
+<li>[Synergistic Reconstruction and Synthesis via Generative Adversarial Networks for Accelerated Multi-Contrast MRI] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Synergistic+Reconstruction+and+Synthesis+via+Generative+Adversarial+Networks+for+Accelerated+Multi-Contrast+MRI&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1805.10704">[arXiv]</a></li>
+<li>[Stain normalization of histopathology images using generative adversarial networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Stain+normalization+of+histopathology+images+using+generative+adversarial+networks&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/abstract/document/8363641/">[ISBI2018]</a></li>
+<li>[MedGAN: Medical Image Translation using GANs] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=MedGAN%3A+Medical+Image+Translation+using+GANs&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1806.06397">[arXiv]</a></li>
+<li>[Retinal Image Synthesis for CAD Development] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Retinal+Image+Synthesis+for+CAD+Development&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-93000-8_70">[ICIAR]</a></li>
+<li>[High-Resolution Mammogram Synthesis using Progressive Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=High-Resolution+Mammogram+Synthesis+using+Progressive+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1807.03401">[arXiv]</a></li>
+<li>[High-resolution medical image synthesis using progressively grown generative adversarial networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=High-resolution+medical+image+synthesis+using+progressively+grown+generative+adversarial+networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1805.03144">[arXiv]</a></li>
+<li>[Learning Myelin Content in Multiple Sclerosis from Multimodal MRI through Adversarial Training] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Learning+Myelin+Content+in+Multiple+Sclerosis+from+Multimodal+MRI+through+Adversarial+Training&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.08039">[MICCAI2018]</a></li>
+<li>[Generation of structural MR images from amyloid PET: Application to MR-less quantification] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generation+of+structural+MR+images+from+amyloid+PET%3A+Application+to+MR-less+quantification.&amp;btnG=">[scholar]</a> <a href="https://europepmc.org/abstract/med/29217736">[JNM]</a></li>
+<li>[Task Driven Generative Modeling for Unsupervised Domain Adaptation Application to X-ray Image Segmentation] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Task+Driven+Generative+Modeling+for+Unsupervised+Domain+Adaptation+Application+to+X-ray+Image+Segmentation&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1806.07201">[arXiv]</a></li>
+<li>[Exploring the potential of generative adversarial networks for synthesizing radiological images of the spine to be used in in silico trials] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Exploring+the+potential+of+generative+adversarial+networks+for+synthesizing+radiological+images+of+the+spine+to+be+used+in+in+silico+trials&amp;btnG=">[scholar]</a> <a href="https://www.frontiersin.org/articles/10.3389/fbioe.2018.00053/full">[FBB]</a></li>
+<li>[Semantic-Aware Generative Adversarial Nets for Unsupervised Domain Adaptation in Chest X-ray Segmentation] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Semantic-Aware+Generative+Adversarial+Nets+for+Unsupervised+Domain+Adaptation+in+Chest+X-ray+Segmentation&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1806.00600">[arXiv]</a></li>
+<li>[Learning Data Augmentation for Brain Tumor Segmentation with Coarse-to-Fine Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Learning+Data+Augmentation+for+Brain+Tumor+Segmentation+with+Coarse-to-Fine+Generative+Adversarial+Networks+&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1805.11291">[arXiv]</a></li>
+<li>[Learning implicit brain MRI manifolds with deep learning] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Learning+implicit+brain+MRI+manifolds+with+deep+learning&amp;btnG=">[scholar]</a> <a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/10574/105741L/Learning-implicit-brain-MRI-manifolds-with-deep-learning/10.1117/12.2293515.short?SSO=1">[SPIE MI2018]</a></li>
+<li>[Optimized generation of high-resolution phantom images using cGAN: Application to quantification of Ki67 breast cancer images] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Optimized+generation+of+high-resolution+phantom+images+using+cGAN%3A+Application+to+quantification+of+Ki67+breast+cancer+images&amp;btnG=">[scholar]</a> <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0196846">[PloS one]</a></li>
+<li>[Generative Adversarial Networks for Image-to-Image Translation on Multi-Contrast MR Images-A Comparison of CycleGAN and UNIT] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+Adversarial+Networks+for+Image-to-Image+Translation+on+Multi-Contrast+MR+Images-A+Comparison+of+CycleGAN+and+UNIT&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1806.07777">[arXiv]</a> <a href="https://github.com/simontomaskarlsson/GAN-MRI">[code]</a></li>
+</ul>
+<h1 id="reconstruction">Reconstruction</h1>
+<ul>
+<li>[Compressed Sensing MRI Reconstruction with Cyclic Loss in Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Compressed+Sensing+MRI+Reconstruction+with+Cyclic+Loss+in+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1709.00753">[arXiv]</a></li>
+<li>[Compressed Sensing MRI Reconstruction using a Generative Adversarial Network with a Cyclic Loss] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Compressed+Sensing+MRI+Reconstruction+using+a+Generative+Adversarial+Network+with+a+Cyclic+Loss&amp;btnG=">[scholar]</a> <a href="https://ieeexplore-ieee-org.cyber.usask.ca/abstract/document/8327637/">[TMI]</a> (published version of the above preprint)</li>
+<li>[Deep Generative Adversarial Networks for Compressed Sensing (GANCS) Automates MRI] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0,5&amp;q=Deep+Generative+Adversarial+Networks+for+Compressed+Sensing+(GANS)+Automated+MRI">[scholar]</a> <a href="https://arxiv.org/abs/1706.00051">[arXiv]</a> <a href="https://github.com/gongenhao/GANCS">[code]</a></li>
+<li>[Accelerated Magnetic Resonance Imaging by Adversarial Neural Network] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Accelerated+Magnetic+Resonance+Imaging+by+Adversarial+Neural+Network&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-67558-9_4">[DLMIA MICCAI 2017]</a></li>
+<li>[Deep De-Aliasing for Fast Compressive Sensing MR] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Deep+De-Aliasing+for+Fast+Compressive+Sensing+MR&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1705.07137">[arXiv]</a></li>
+<li>[3D conditional generative adversarial networks for high-quality PET image estimation at low dose] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=3D+conditional+generative+adversarial+networks+for+high-quality+PET+image+estimation+at+low+dose&amp;btnG=">[scholar]</a> <a href="https://www.sciencedirect.com/science/article/pii/S1053811918302507?via%3Dihub">[NI]</a></li>
+<li>[Improving resolution of MR images with an adversarial network incorporating images with different contrast] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Improving+resolution+of+MR+images+with+an+adversarial+network+incorporating+images+with+different+contrast&amp;btnG=">[scholar]</a> <a href="https://aapm.onlinelibrary.wiley.com/doi/abs/10.1002/mp.12945">[MP]</a></li>
+<li>[Synergistic Reconstruction and Synthesis via Generative Adversarial Networks for Accelerated Multi-Contrast MRI] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Synergistic+Reconstruction+and+Synthesis+via+Generative+Adversarial+Networks+for+Accelerated+Multi-Contrast+MRI&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1805.10704">[arXiv]</a></li>
+</ul>
+<h1 id="classification">Classification</h1>
+<ul>
+<li>[Semi-supervised Assessment of Incomplete LV Coverage in Cardiac MRI Using Generative Adversarial Nets] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Semi-supervised+Assessment+of+Incomplete+LV+Coverage+in+Cardiac+MRI+Using+Generative+Adversarial+Nets&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/chapter/10.1007/978-3-319-68127-6_7">[SASHIMI 2017]</a></li>
+<li>[Generalization of Deep Neural Networks for Chest Pathology Classification in X-Rays Using Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generalization+of+Deep+Neural+Networks+for+Chest+Pathology+Classification+in+X-Rays+Using+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1712.01636">[arXiv]</a></li>
+<li>[Unsupervised Learning for Cell-level Visual Representation in Histopathology Images with Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+Learning+for+Cell-level+Visual+Representation+in+Histopathology+Images+with+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1711.11317">[arXiv]</a> <a href="https://github.com/hbkunn/nu_gan">[code]</a></li>
+<li>[Synthetic Data Augmentation using GAN for Improved Liver Lesion Classification] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Synthetic+Data+Augmentation+using+GAN+for+Improved+Liver+Lesion+Classification&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1801.02385">[arXiv]</a></li>
+<li>[GAN-based Synthetic Medical Image Augmentation for increased CNN Performance in Liver Lesion Classification] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=GAN-based+Synthetic+Medical+Image+Augmentation+for+increased+CNN+Performance+in+Liver+Lesion+Classification&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1803.01229">[arXiv]</a>(extended version of above preprint)</li>
+<li>[Unsupervised and semi-supervised learning with Categorical Generative Adversarial Networks assisted by Wasserstein distance for dermoscopy image Classification] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Unsupervised+and+semi-supervised+learning+with+Categorical+Generative+Adversarial+Networks+assisted+by+Wasserstein+distance+for+dermoscopy+image+Classification&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.03700">[arXiv]</a></li>
+<li>[Semi-supervised learning with generative adversarial networks for chest X-ray classification with ability of data domain adaptation] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=SEMI-SUPERVISED+LEARNING+WITH+GENERATIVE+ADVERSARIAL+NETWORKS+FOR+CHEST+X-RAY+CLASSIFICATION+WITH+ABILITY+OF+DATA+DOMAIN+ADAPTATION&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/abstract/document/8363749/">[ISBI2018]</a></li>
+<li>[Generative adversarial learning for reducing manual annotation in semantic segmentation on large scale miscroscopy images: Automated vessel segmentation in retinal fundus image as test case] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+adversarial+learning+for+reducing+manual+annotation+in+semantic+segmentation+on+large+scale+miscroscopy+images%3A+Automated+vessel+segmentation+in+retinal+fundus+image+as+test+case&amp;btnG=">[scholar]</a> <a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w8/papers/Lahiri_Generative_Adversarial_Learning_CVPR_2017_paper.pdf">[CVPRW2017]</a></li>
+</ul>
+<h1 id="others">Others</h1>
+<ul>
+<li>[Intraoperative Organ Motion Models with an Ensemble of Conditional Generative Adversarial Networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Intraoperative+Organ+Motion+Models+with+an+Ensemble+of+Conditional+Generative+Adversarial+Networks&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1709.02255">[arXiv]</a></li>
+<li>[Retinal Vasculature Segmentation Using Local Saliency Maps and Generative Adversarial Networks For Image Super Resolution] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Retinal+Vasculature+Segmentation+Using+Local+Saliency+Maps+and+Generative+Adversarial+Networks+For+Image+Super+Resolution&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1710.04783">[arXiv]</a></li>
+<li>[Adversarial training with cycle consistency for unsupervised super-resolution in endomicroscopy
+] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+training+with+cycle+consistency+for+unsupervised+super-resolution+in+endomicroscopy&amp;btnG=">[scholar]</a> <a href="https://openreview.net/forum?id=BktMD6isM">[MIDL2018]</a></li>
+<li>[Brain MRI super-resolution using 3D generative adversarial networks
+] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Brain+MRI+super-resolution+using+3D+generative+adversarial+networks&amp;btnG=">[scholar]</a> <a href="https://openreview.net/pdf?id=rJevSbniM">[MIDL2018]</a></li>
+<li>[Generative Spatiotemporal Modeling Of Neutrophil Behavior] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+Spatiotemporal+Modeling+Of+Neutrophil+Behavior&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.00393">[ISBI2018]</a></li>
+<li>[Deformable medical image registration using generative adversarial networks] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Deformable+medical+image+registration+using+generative+adversarial+networks&amp;btnG=">[scholar]</a> <a href="https://ieeexplore.ieee.org/document/8363845/">[ISBI2018]</a></li>
+<li>[Adversarial Image Registration with Application for MR and TRUS Image Fusion] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Adversarial+Image+Registration+with+Application+for+MR+and+TRUS+Image+Fusion&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1804.11024">[arXiv]</a></li>
+<li>[Exploiting the potential of unlabeled endoscopic video data with self-supervised learning] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Exploiting+the+potential+of+unlabeled+endoscopic+video+data+with+self-supervised+learning&amp;btnG=">[scholar]</a> <a href="https://link.springer.com/content/pdf/10.1007/s11548-018-1772-0.pdf">[IJCARS]</a></li>
+<li>[Generative Adversarial Networks for MR-CT Deformable Image Registration] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Generative+Adversarial+Networks+for+MR-CT+Deformable+Image+Registration&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1807.07349">[arXiv]</a></li>
+<li>[Efficient and Accurate MRI Super-Resolution using a Generative Adversarial Network and 3D Multi-Level Densely Connected Network] <a href="https://scholar.google.ca/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=Efficient+and+Accurate+MRI+Super-Resolution+using+a+Generative+Adversarial+Network+and+3D+Multi-Level+Densely+Connected+Network&amp;btnG=">[scholar]</a> <a href="https://arxiv.org/abs/1803.01417">[arXiv]</a></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python中正则表达式小结]]></title>
+        <id>https://nuistcz.github.io/post/Python_Regular_expression</id>
+        <link href="https://nuistcz.github.io/post/Python_Regular_expression">
+        </link>
+        <updated>2018-07-29T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>正则表达式本身是一种小型的、高度专业化的编程语言，而在python中，通过内嵌集成re模块，程序媛们可以直接调用来实现正则匹配。正则表达式模式被编译成一系列的字节码，然后由用C编写的匹配引擎执行。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>正则表达式本身是一种小型的、高度专业化的编程语言，而在python中，通过内嵌集成re模块，程序媛们可以直接调用来实现正则匹配。正则表达式模式被编译成一系列的字节码，然后由用C编写的匹配引擎执行。</p>
+<!-- more -->
+<h2 id="常用的字符含义">常用的字符含义</h2>
+<h4 id="普通字符和11个元字符">普通字符和11个元字符</h4>
+<p>普通字符 | 解释 | Input | Output
+. | 匹配任意除换行符&quot;\n&quot;外的字符(在DOTALL模式中也能匹配换行符 | a.c | abc
+、 | 转义字符，使后一个字符改变原来的意思 | a.c;a\c | a.c;a\c</p>
+<ul>
+<li>| 匹配前一个字符0或多次 | |</li>
+</ul>
+<ul>
+<li>| 匹配前一个字符1次或无限次 | abc+ | abc;abccc
+? | 匹配一个字符0次或1次 | abc? | ab;abc
+^ | 匹配字符串开头。在多行模式中匹配每一行的开头	| ^abc | abc
+$ | 匹配字符串末尾，在多行模式中匹配每一行的末尾	| abc$ | abc
+| |或。匹配|左右表达式任意一个，从左到右匹配，如果|没有包括在()中，则它的范围是整个正则表达式	| abc|def | abcdef
+[] | 字符集。对应的位置可以是字符集中任意字符。字符集中的字符可以逐个列出，也可以给出范围，如[abc]或[a-c]。[^abc]表示取反，即非abc。所有特殊字符在字符集中都失去其原有的特殊含义。用\反斜杠转义恢复特殊字符的特殊含义。|a[bcd]e | abe ace ade
+() | 被括起来的表达式将作为分组，从表达式左边开始没遇到一个分组的左括号“（”，编号+1.分组表达式作为一个整体，可以后接数量词。表达式中的|仅在该组中有效。| (abc){2}  a(123|456)c	| abcabc a456c
+<code>{}</code>| <code>{m}</code>匹配前一个字符m次，<code>{m,n}</code>匹配前一个字符m至n次，若省略n，则匹配m至无限次 | <code>ab{1,2}c</code> | abc abbc</li>
+</ul>
+<h5 id="tips">Tips</h5>
+<p>这里需要强调一下反斜杠\的作用：</p>
+<ul>
+<li>反斜杠后边跟元字符去除特殊功能；（即将特殊字符转义成普通字符）</li>
+<li>反斜杠后边跟普通字符实现特殊功能；（即预定义字符）</li>
+<li>引用序号对应的字组所匹配的字符串。</li>
+</ul>
+<pre><code class="language-python">a=re.search(r'(tina)(fei)haha\2','tinafeihahafei tinafeihahatina').group()
+print(a)
+&gt; tinafeihahafei
+</code></pre>
+<h4 id="预定义字符集可以写在字符集中">预定义字符集(可以写在字符集[...]中)</h4>
+<p>\d | 数字:[0-9]	| a\bc | a1c
+\D | 非数字:[^\d]	 | a\Dc | abc
+\s | 匹配任何空白字符:[&lt;空格&gt;\t\r\n\f\v] | a\sc | a c
+\S | 非空白字符:[^\s]	| a\Sc | abc
+\w | 匹配包括下划线在内的任何字字符:[A-Za-z0-9_] | a\wc |abc
+\W | 匹配非字母字符，即匹配特殊字符 | a\Wc | a c
+\A | 仅匹配字符串开头,同^	| \Aabc	| abc
+\Z | 仅匹配字符串结尾，同$	| abc\Z | abc
+\b | 匹配\w和\W之间，即匹配单词边界匹配一个单词边界，也就是指单词和空格间的位置。例如， 'er\b' 可以匹配&quot;never&quot; 中的 'er'，但不能匹配 &quot;verb&quot; 中的 'er'。| \babc\b a\b!bc |	空格abc空格 a!bc
+\B | [^\b] | a\Bbc | abc</p>
+<p>这里需要强调一下\b的单词边界的理解：</p>
+<blockquote>
+<p>Input</p>
+</blockquote>
+<pre><code class="language-python">w = re.findall('\btina','tian tinaaaa')
+print(w)
+s = re.findall(r'\btina','tian tinaaaa')
+print(s)
+v = re.findall(r'\btina','tian#tinaaaa')
+print(v)
+a = re.findall(r'\btina\b','tian#tina@aaa')
+print(a)
+</code></pre>
+<blockquote>
+<p>Output</p>
+</blockquote>
+<pre><code class="language-python">[]
+['tina']
+['tina']
+['tina']
+</code></pre>
+<h4 id="特殊分组用法">特殊分组用法</h4>
+<p>| ------------- |:-------------:| -----:|
+|<code>(?P&lt;name&gt;)</code> | 分组，除了原有的编号外再指定一个额外的别名 | (?P<id>abc){2} | abcabc |
+|<code>(?P=name)</code>| 引用别名为<name>的分组匹配到字符串 | (?P<id>\d)abc(?P=id)	| 1abc1 5abc5 |
+|<code>\&lt;number&gt;</code> | 引用编号为<number>的分组匹配到字符串	| (\d)abc\1 | 1abc1 5abc5 |</p>
+<h2 id="re模块中常用功能函数">re模块中常用功能函数</h2>
+<h4 id="compile">compile()</h4>
+<p>编译正则表达式模式，返回一个对象的模式。（可以把那些常用的正则表达式编译成正则表达式对象，这样可以提高一点效率。）
+格式：</p>
+<blockquote>
+<p>re.compile(pattern,flags=0)</p>
+</blockquote>
+<p>pattern: 编译时用的表达式字符串。flags: 编译标志位，用于修改正则表达式的匹配方式，如：是否区分大小写，多行匹配等。常用的flags有：</p>
+<p>标志	| 含义
+re.S(DOTALL) | 使.匹配包括换行在内的所有字符
+re.I（IGNORECASE）| 使匹配对大小写不敏感
+re.L（LOCALE）| 做本地化识别（locale-aware)匹配，法语等
+re.M(MULTILINE) | 多行匹配，影响^和$
+re.X(VERBOSE) | 该标志通过给予更灵活的格式以便将正则表达式写得更易于理解
+re.U | 根据Unicode字符集解析字符，这个标志影响\w,\W,\b,\B</p>
+<pre><code class="language-python">import re
+tt = &quot;Tina is a good girl, she is cool, clever, and so on...&quot;
+rr = re.compile(r'\w*oo\w*')
+print(rr.findall(tt))   #查找所有包含'oo'的单词
+&gt; ['good', 'cool']
+</code></pre>
+<h4 id="match">match()</h4>
+<p>决定RE是否在字符串刚开始的位置匹配。//注：这个方法并不是完全匹配。当pattern结束时若string还有剩余字符，仍然视为成功。想要完全匹配，可以在表达式末尾加上边界匹配符'$'</p>
+<blockquote>
+<p>re.match(pattern, string, flags=0)</p>
+</blockquote>
+<pre><code class="language-python">print(re.match('com','comwww.runcomoob').group())
+print(re.match('com','Comwww.runcomoob',re.I).group())
+&gt; com
+&gt; com
+</code></pre>
+<h4 id="search">search()</h4>
+<p>re.search函数会在字符串内查找模式匹配,只要找到第一个匹配然后返回，如果字符串没有匹配，则返回None。</p>
+<blockquote>
+<p>re.search(pattern, string, flags=0)</p>
+</blockquote>
+<pre><code class="language-python">print(re.search('\dcom','www.4comrunoob.5com').group())
+&gt; 4com
+</code></pre>
+<p>match和search一旦匹配成功，就是一个match object对象，而match object对象有以下方法：</p>
+<ul>
+<li>group() 返回被 RE 匹配的字符串</li>
+<li>start() 返回匹配开始的位置</li>
+<li>end() 返回匹配结束的位置</li>
+<li>span() 返回一个元组包含匹配 (开始,结束) 的位置</li>
+<li>group() 返回re整体匹配的字符串，可以一次输入多个组号，对应组号匹配的字符串。</li>
+</ul>
+<p>a. group（）返回re整体匹配的字符串，
+b. group (n,m) 返回组号为n，m所匹配的字符串，如果组号不存在，则返回indexError异常
+c.groups（）groups() 方法返回一个包含正则表达式中所有小组字符串的元组，从 1 到所含的小组号，通常groups()不需要参数，返回一个元组，元组中的元就是正则表达式中定义的组。</p>
+<pre><code class="language-python">import re
+a = &quot;123abc456&quot;
+ print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(0))   #123abc456,返回整体
+ print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(1))   #123
+ print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(2))   #abc
+ print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(3))   #456
+###group(1) 列出第一个括号匹配部分，group(2) 列出第二个括号匹配部分，group(3) 列出第三个括号匹配部分。###
+</code></pre>
+<h4 id="findall">findall()</h4>
+<p>re.findall遍历匹配，可以获取字符串中所有匹配的字符串，返回一个列表。</p>
+<blockquote>
+<p>re.findall(pattern, string, flags=0)</p>
+</blockquote>
+<pre><code class="language-python">p = re.compile(r'\d+')
+print(p.findall('o1n2m3k4'))
+&gt; ['1', '2', '3', '4']
+</code></pre>
+<pre><code class="language-python">import re
+tt = &quot;Tina is a good girl, she is cool, clever, and so on...&quot;
+rr = re.compile(r'\w*oo\w*')
+print(rr.findall(tt))
+print(re.findall(r'(\w)*oo(\w)',tt))#()表示子表达式 
+&gt; ['good', 'cool']
+&gt; [('g', 'd'), ('c', 'l')]
+</code></pre>
+<h4 id="finditer">finditer()</h4>
+<p>搜索string，返回一个顺序访问每一个匹配结果（Match对象）的迭代器。找到 RE 匹配的所有子串，并把它们作为一个迭代器返回。</p>
+<blockquote>
+<p>re.finditer(pattern, string, flags=0)</p>
+</blockquote>
+<pre><code class="language-python">iter = re.finditer(r'\d+','12 drumm44ers drumming, 11 ... 10 ...')
+for i in iter:
+    print(i)
+    print(i.group())
+    print(i.span())
+
+#Output
+&lt;_sre.SRE_Match object; span=(0, 2), match='12'&gt;
+12
+(0, 2)
+&lt;_sre.SRE_Match object; span=(8, 10), match='44'&gt;
+44
+(8, 10)
+&lt;_sre.SRE_Match object; span=(24, 26), match='11'&gt;
+11
+(24, 26)
+&lt;_sre.SRE_Match object; span=(31, 33), match='10'&gt;
+10
+(31, 33)
+</code></pre>
+<h4 id="split">split()</h4>
+<p>按照能够匹配的子串将string分割后返回列表。可以使用re.split来分割字符串，如：re.split(r'\s+', text)；将字符串按空格分割成一个单词列表。</p>
+<blockquote>
+<p>re.split(pattern, string[, maxsplit])</p>
+</blockquote>
+<p>maxsplit用于指定最大分割次数，不指定将全部分割。</p>
+<pre><code class="language-python">print(re.split('\d+','one1two2three3four4five5'))
+执行结果如下：
+['one', 'two', 'three', 'four', 'five', '']
+</code></pre>
+<h4 id="sub">sub()</h4>
+<p>使用re替换string中每一个匹配的子串后返回替换后的字符串。</p>
+<blockquote>
+<p>re.sub(pattern, repl, string, count)</p>
+</blockquote>
+<pre><code class="language-python">import re
+text = &quot;JGood is a handsome boy, he is cool, clever, and so on...&quot;
+print(re.sub(r'\s+', '-', text))
+&gt; JGood-is-a-handsome-boy,-he-is-cool,-clever,-and-so-on...
+
+其中第二个函数是替换后的字符串；本例中为'-'
+
+第四个参数指替换个数。默认为0，表示每个匹配项都替换。
+</code></pre>
+<p>re.sub还允许使用函数对匹配项的替换进行复杂的处理。</p>
+<p>如：re.sub(r'\s', lambda m: '[' + m.group(0) + ']', text, 0)；将字符串中的空格' '替换为'[ ]'。</p>
+<pre><code class="language-python">import re
+text = &quot;JGood is a handsome boy, he is cool, clever, and so on...&quot;
+print(re.sub(r'\s+', lambda m:'['+m.group(0)+']', text,0))
+执行结果如下：
+JGood[ ]is[ ]a[ ]handsome[ ]boy,[ ]he[ ]is[ ]cool,[ ]clever,[ ]and[ ]so[ ]on...
+</code></pre>
+<h4 id="subn">subn()</h4>
+<p>返回替换次数</p>
+<blockquote>
+<p>subn(pattern, repl, string, count=0, flags=0)</p>
+</blockquote>
+<pre><code class="language-python">print(re.subn('[1-2]','A','123456abcdef'))
+print(re.sub(&quot;g.t&quot;,&quot;have&quot;,'I get A,  I got B ,I gut C'))
+print(re.subn(&quot;g.t&quot;,&quot;have&quot;,'I get A,  I got B ,I gut C'))
+#output
+('AA3456abcdef', 2)
+I have A,  I have B ,I have C
+('I have A,  I have B ,I have C', 3)
+</code></pre>
+<h2 id="attention">Attention</h2>
+<h4 id="rematch与research与refindall的区别">re.match与re.search与re.findall的区别</h4>
+<p>re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None；而re.search匹配整个字符串，直到找到一个匹配。</p>
+<pre><code class="language-python">a=re.search('[\d]',&quot;abc33&quot;).group()
+print(a)
+p=re.match('[\d]',&quot;abc33&quot;)
+print(p)
+b=re.findall('[\d]',&quot;abc33&quot;)
+print(b)
+#output
+3
+None
+['3', '3']
+</code></pre>
+<h4 id="贪婪匹配与非贪婪匹配">贪婪匹配与非贪婪匹配</h4>
+<pre><code class="language-python">*?,+?,??,{m,n}?    前面的*,+,?等都是贪婪匹配，也就是尽可能匹配，后面加?号使其变成惰性匹配
+
+a = re.findall(r&quot;a(\d+?)&quot;,'a23b')
+print(a)
+b = re.findall(r&quot;a(\d+)&quot;,'a23b')
+print(b)
+#Output
+['2']
+['23']
+
+a = re.match('&lt;(.*)&gt;','&lt;H1&gt;title&lt;H1&gt;').group()
+print(a)
+b = re.match('&lt;(.*?)&gt;','&lt;H1&gt;title&lt;H1&gt;').group()
+print(b)
+#Output
+&lt;H1&gt;title&lt;H1&gt;
+&lt;H1&gt;
+
+a = re.findall(r&quot;a(\d+)b&quot;,'a3333b')
+print(a)
+b = re.findall(r&quot;a(\d+?)b&quot;,'a3333b')
+print(b)
+#Output
+['3333']
+['3333']
+#######################
+这里需要注意的是如果前后均有限定条件的时候，就不存在什么贪婪模式了，非匹配模式失效。
+</code></pre>
+<h4 id="用flags时遇到的小坑">用flags时遇到的小坑</h4>
+<pre><code class="language-python">print(re.split('a','1A1a2A3',re.I))#输出结果并未能区分大小写
+这是因为re.split(pattern，string，maxsplit,flags)默认是四个参数，当我们传入的三个参数的时候，系统会默认re.I是第三个参数，所以就没起作用。如果想让这里的re.I起作用，写成flags=re.I即可。
+</code></pre>
+<h2 id="application">Application</h2>
+<h4 id="匹配电话号码">匹配电话号码</h4>
+<pre><code class="language-python">p = re.compile(r'\d{3}-\d{6}')
+print(p.findall('010-628888'))
+</code></pre>
+<h4 id="匹配ip">匹配IP</h4>
+<pre><code class="language-python">re.search(r&quot;(([01]?\d?\d|2[0-4]\d|25[0-5])\.){3}([01]?\d?\d|2[0-4]\d|25[0-5]\.)&quot;,&quot;192.168.1.1&quot;)
+</code></pre>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/tina-python/p/5508402.html">cnblogs/清荷凝露</a></li>
+<li><a href="https://www.jianshu.com/p/ef23c8ed7e71">简书/静心多想</a></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux运维常用命令]]></title>
+        <id>https://nuistcz.github.io/post/Linux_Script</id>
+        <link href="https://nuistcz.github.io/post/Linux_Script">
+        </link>
+        <updated>2018-07-26T15:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>随着GPU并行计算的算力提高，在DeepLearning中使用GPU可以大大缩短训练神经网络的时间。但是个人电脑的性能有限，这时就需要搭建专用的深度学习服务器来进行计算。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>随着GPU并行计算的算力提高，在DeepLearning中使用GPU可以大大缩短训练神经网络的时间。但是个人电脑的性能有限，这时就需要搭建专用的深度学习服务器来进行计算。</p>
+<!-- more -->
+<h2 id="运维远程服务器的技巧">运维远程服务器的技巧</h2>
+<h3 id="查看性能">查看性能</h3>
+<p>最常用的<code>top、vmstat、iostat、free和sar</code>,此外仍然可以通过以下命令监控系统：</p>
+<ol>
+<li>查看物理cpu个数：</li>
+</ol>
+<blockquote>
+<p><code>cat /proc/cpuinfo |grep &quot;physical id&quot;|sort|uniq|wc -l</code></p>
+</blockquote>
+<ol start="2">
+<li>查看每个物理cpu中的core个数：</li>
+</ol>
+<blockquote>
+<p><code>cat /proc/cpuinfo |grep &quot;cpu cores&quot;|wc -l</code></p>
+</blockquote>
+<ol start="3">
+<li>逻辑cpu的个数：</li>
+</ol>
+<blockquote>
+<p><code>cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l</code></p>
+</blockquote>
+<ol start="4">
+<li>查看内存使用情况：</li>
+</ol>
+<blockquote>
+<p>free -m</p>
+</blockquote>
+<ol start="5">
+<li>查看硬盘及分区信息：</li>
+</ol>
+<blockquote>
+<p>fdisk -l</p>
+</blockquote>
+<ol start="6">
+<li>查看文件系统的磁盘空间占用情况：</li>
+</ol>
+<blockquote>
+<p>df -h</p>
+</blockquote>
+<ol start="7">
+<li>查看硬盘的I/O性能（每隔一秒显示一次，显示5次）：</li>
+</ol>
+<blockquote>
+<p>iostat -x 1 5</p>
+</blockquote>
+<ol start="8">
+<li>查看linux系统中某目录的大小：</li>
+</ol>
+<blockquote>
+<p>du -sh /root</p>
+</blockquote>
+<ol start="9">
+<li>占用空间最多的文件或目录, 按照从大到小的顺序，找出系统中占用最多空间的前10个文件或目录：</li>
+</ol>
+<blockquote>
+<p><code>du -cksh *|sort -rn|head -n 10</code></p>
+</blockquote>
+<ol start="10">
+<li>查看平均负载</li>
+</ol>
+<blockquote>
+<p>uptime</p>
+</blockquote>
+<ol start="11">
+<li>CPU性能评估</li>
+</ol>
+<blockquote>
+<p>vmstat
+sar</p>
+</blockquote>
+<ol start="12">
+<li>内存性能评估</li>
+</ol>
+<blockquote>
+<p>free
+vmstat</p>
+</blockquote>
+<ol start="13">
+<li>磁盘I/O性能评估</li>
+</ol>
+<blockquote>
+<p>iostat
+sar</p>
+</blockquote>
+<ol start="14">
+<li>网络性能评估</li>
+</ol>
+<blockquote>
+<pre><code></code></pre>
+</blockquote>
+<p>（1）通过ping命令检测网络的连通性
+（2）通过netstat –i组合检测网络接口状况
+（3）通过netstat –r组合检测系统的路由表信息
+（4）通过sar –n组合显示系统的网络运行状态</p>
+<pre><code>
+
+### 选择GPU和限制显存
+
+Tensorflow默认是占尽全部显存的，即使你的代码网络结构不占用很大的现存的时候，tf也会默认全部申请是为了在程序运行的过程中直接取用不用再申请操作显存，所有有的时候回看到明明是一个很小的代码却占尽了GPU显存，但是GPU得计算力却还不到30%，尤其是在多个CPU的时候，每块GPU的显存都申请满了，而只有一颗GPU在跑程序。所以我们有必要手动的修改下自己的代码，只需要在关键的地方添上几句代码，就会限制显存使用，同时还能指定跑程序的GPU。如果参数选择的正确的话对程序的运行速度是没有限制的。
+
+&gt; CUDA_VISIBLE_DEVICES=0 python nn.py 
+
+将Tensoeflow的命令行参数写在python之前，指明你要使用的GPU，0代表第一块GPU，0，1代表使用设备号是0和1的两块GPU。
+```python
+#使用tf.flags 传递参数
+#在session中使用限制显存的参数
+tf.app.flags.DEFINE_float('mr',0.5,'allocate GPU memory rate')
+FLAGS=tf.app.flags.FLAGS
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=FLAGS.mr)
+session = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+</code></pre>
+<p>上面的GPUOptions就限制了你的显存的使用率。并且我们使用tf.flags可以直接运行python程序的时候通过命令行参数来指定这个分配现存的大小。</p>
+<pre><code class="language-python"># 使用第一块GPU，并且只使用第一块GPU20%的显存做计算。
+CUDA_VISIBLE_DEVICES=0 python nn.py --mr=0.2
+</code></pre>
+<p>也可以使用<code>os</code>包来实现相应功能：</p>
+<pre><code class="language-python">import os
+os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = &quot;3&quot;
+</code></pre>
+<h3 id="后台运行">后台运行</h3>
+<p>只需要在运行命令行之后添加一个<code>&amp;</code>符号便可以将当前的进程挂到后台。但是一定要记得如果不再使用当前进程的话，用<code>Ctrl+c</code>是杀不掉的，一定要使用<code>kill</code>命令杀线程。</p>
+<blockquote>
+<p><code>sudo kill -s 9 PID (# -s 9 代表着强制杀掉进程，百杀百中)</code></p>
+</blockquote>
+<p>有时候忘记了进程号，我们需要查找当前活跃的进程，然后找到这个进程号。</p>
+<blockquote>
+<p><code>ps -ef | grep &quot;python&quot;</code></p>
+</blockquote>
+<h3 id="使用ssh-keygen-完成免密码登录">使用ssh-keygen 完成免密码登录</h3>
+<p><code>～/.ssh</code></p>
+<h3 id="rysnc">Rysnc</h3>
+<pre><code>rsync -avzP --delete root@{remoteHost}:{remoteDir} {localDir}
+</code></pre>
+<h3 id="gpu">GPU</h3>
+<pre><code>watch -n 0.2 nvidia-smi
+</code></pre>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://www.jianshu.com/p/cfcc2b197308">简书/北静王</a></li>
+<li><a href="https://www.cnblogs.com/ace-lee/p/6628079.html">cnblogs/ace_lee</a></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python的常用文件/文件夹操作]]></title>
+        <id>https://nuistcz.github.io/post/Python_file_dict</id>
+        <link href="https://nuistcz.github.io/post/Python_file_dict">
+        </link>
+        <updated>2018-07-08T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>python中对文件和文件夹进行移动、复制、删除、重命名，主要依赖os模块和shutil模块，要死记硬背这两个模块的方法还是比较困难的，可以用一个例子集中演示文件的移动、复制、删除、重命名，用到的时候直接查询就行。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>python中对文件和文件夹进行移动、复制、删除、重命名，主要依赖os模块和shutil模块，要死记硬背这两个模块的方法还是比较困难的，可以用一个例子集中演示文件的移动、复制、删除、重命名，用到的时候直接查询就行。</p>
+<!-- more -->
+<h2 id="key">Key</h2>
+<blockquote>
+<p>关键词：Python 数据结构</p>
+</blockquote>
+<h3 id="常用的文件操作">常用的文件操作</h3>
+<pre><code class="language-python">#文件、文件夹的移动、复制、删除、重命名
+
+#导入shutil模块和os模块
+import shutil,os
+
+#复制单个文件
+shutil.copy(&quot;C:\\a\\1.txt&quot;,&quot;C:\\b&quot;)
+#复制并重命名新文件
+shutil.copy(&quot;C:\\a\\2.txt&quot;,&quot;C:\\b\\121.txt&quot;)
+#复制整个目录(备份)
+shutil.copytree(&quot;C:\\a&quot;,&quot;C:\\b\\new_a&quot;)
+
+#删除文件
+os.unlink(&quot;C:\\b\\1.txt&quot;)
+os.unlink(&quot;C:\\b\\121.txt&quot;)
+#删除空文件夹
+try:
+    os.rmdir(&quot;C:\\b\\new_a&quot;)
+except Exception as ex:
+    print(&quot;错误信息：&quot;+str(ex))#提示：错误信息，目录不是空的
+#删除文件夹及内容
+shutil.rmtree(&quot;C:\\b\\new_a&quot;)
+
+#移动文件
+shutil.move(&quot;C:\\a\\1.txt&quot;,&quot;C:\\b&quot;)
+#移动文件夹
+shutil.move(&quot;C:\\a\\c&quot;,&quot;C:\\b&quot;)
+
+#重命名文件
+shutil.move(&quot;C:\\a\\2.txt&quot;,&quot;C:\\a\\new2.txt&quot;)
+#重命名文件夹
+shutil.move(&quot;C:\\a\\d&quot;,&quot;C:\\a\\new_d&quot;)
+</code></pre>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="python实现对文件夹内所有特定格式文件的提取">python实现对文件夹内所有特定格式文件的提取</h3>
+<p>字典可以用一个被大括号包围的以逗号分隔的键值对(key:value)列表来创建，例
+如：[Math Processing Error]，或者用字典构造器来构造。</p>
+<pre><code class="language-python">import os
+import shutil
+path = '要提取的文件夹i地址'
+new_path = '新文件地址'
+
+for root,dirs,files in os.walk(path):
+    for i in range(len(files)):
+        if(files[i][-3:] == 'jpg'):
+            file_path = root + '/' + files[i]
+            new_file_path = new_path + '/' + files[i]
+            shutil.mov(file_path,new_file_path)
+</code></pre>
+<p>os模块，即系统模块。主要用于处理文件和目录，其最大的特点是可以跨平台。
+os.walk()方法就是在目录中游走输出，语法格式为:</p>
+<blockquote>
+<p>os.wlak(top[,topdown = True[,onerror = None[,followlinks = False]]])
+总共有四个参数：</p>
+</blockquote>
+<ol>
+<li>top，产生三元组：文件夹路径，文件夹名字，文件名。</li>
+<li>topdown，True则自上而下，False则自下而上。</li>
+<li>onerror，是一个函数，调用一个参数，出现错误时继续wlak或者抛出异常停止walk。</li>
+<li>followlinks，true时可以通过软链接访问目录。</li>
+</ol>
+<h3 id="数据集切割">数据集切割</h3>
+<p>使用1:6的比例切分Train/Test</p>
+<pre><code class="language-python">import os
+import shutil
+path = '/Users/sousei/PycharmProjects/Project/dataset/test/b_split'
+np = '/Users/sousei/PycharmProjects/Project/dataset/test/a_split'
+count = 0
+rand = 0
+for root,dirs,files in os.walk(path,True):
+    print('root:%s'%root)
+    # print('dirs:%s'%dirs)
+    # print('files:%s'%files)
+    print(len(files))
+    
+    for i in range(len(files)):
+        rand += 1
+        if(files[i][-3:] == 'jpg'):
+            file_path = root + '/' + files[i]
+            new_file_path = np + '/' + str(count) + '.jpg'
+            # new_file_path = np + '/' + files[i]
+            if(rand%7 == 0):
+                shutil.move(file_path,new_file_path)
+                print (&quot;Move!&quot;)
+                count += 1
+</code></pre>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://blog.csdn.net/woshisangsang/article/details/74360612">CSDN/熊猫大哥大</a></li>
+<li><a href="https://www.cnblogs.com/gotoMars/p/8668741.html">CNBlogs/三寸碧玉心</a></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python的Dict使用方法集合]]></title>
+        <id>https://nuistcz.github.io/post/Python_Dict</id>
+        <link href="https://nuistcz.github.io/post/Python_Dict">
+        </link>
+        <updated>2018-07-07T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Python 数据结构</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Python 数据结构</p>
+<!-- more -->
+<h2 id="前言">前言</h2>
+<p>一个映射对象将可散列的值映射到任意对象。映射类型是可变的对象。当前只有一种标准的映射类型，即字典。用作键值的数字类型遵循正常的数值比较规则：如果两个数是相等的（例如1和1.0），那么它们可以交替使用来索引同一个字典条目。（但是注意，由于计算机将浮点数存储为近似值，所以将他们用作字典的键值是不明智的）
+字典的键值几乎可以是任意值。包含列表字典和其他可变类型（比较是通过值而不是对象本身的类型）不能作为键值。</p>
+<h2 id="key">Key</h2>
+<blockquote>
+<p>关键词：Python 数据结构</p>
+</blockquote>
+<h3 id="intro">Intro</h3>
+<p>字典可以用一个被大括号包围的以逗号分隔的键值对(key:value)列表来创建，例
+如：[Math Processing Error]，或者用字典构造器来构造。
+<strong>字典构造器如下:</strong></p>
+<pre><code class="language-python">    class dict(**kwarg)
+    class dict(mapping, **kwarg)
+    class dict(iterable, **kwarg)
+</code></pre>
+<h3 id="字典中支持的方法">字典中支持的方法：</h3>
+<pre><code>    len(d)
+        返回字典中的条目数
+
+    d[key]
+        返回该键值key对应的条目，如果没有对应条目，则触发KeyError错误。
+    如果一个字典的子类定义了__missing__()方法，并且该key不存在，那么d[key]操作通过键值key来调用该方法（__missing__()方法）。
+    d[key]操作就会返回或者触发__missing__(key)中定义的任何值，如果定义的是返回值，则返回该值，如果定义的是错误，则触发该错误。
+    没有其他操作或方法会调用__missing__()，也就是仅仅d[key]中key不存在时才会调用该方法。如果__missing__()没有定义，那么会触发
+    KeyError错误；__missing__()必须定义成方法，不能是一个变量。
+    例如如下代码所示:
+    &gt;&gt;&gt; class Counter(dict):
+    ...     def __missing__(self, key):
+    ...         return 0
+    &gt;&gt;&gt; c = Counter()
+    &gt;&gt;&gt; c['red']
+    0
+    &gt;&gt;&gt; c['red'] += 1
+    &gt;&gt;&gt; c['red']
+    1
+
+    d[key] = value
+        设置d[key]的值为value，如果该key不存在，则为新增
+
+    del d[key]
+        从字典d中移除key对应的键值对条目，如果该key不存在，则会触发KeyError错误。
+
+    key in d
+        如果字典d中有该key，则返回true,否则返回false
+
+    key not in d:
+        和key in d意思相反
+
+    iter(d)
+        返回包含字典d中所有键值的迭代器，是iter(d.keys())的缩写
+
+    clear()
+        清空字典中的所有条目
+
+    copy() 
+        返回该字典的浅拷贝
+
+    classmethod fromkeys(seq[,value])
+        用seq中的键值和设置的相应的value来创建一个新的字典
+        fromkeys()是一个类的方法，返回一个新的字典，值为None
+
+    get(key[,default])
+        如果字典中存在该key,返回字典中key对应的值;如不存在，则返回方法中给定的default值。如果方法中没有给定default值，则默认为
+        None，总之永远不会触发KeyError错误。
+
+    items()
+        返回字典的新视图（即返回（key,value）列表）
+
+    keys()
+        返回字典中键值的新视图（即键值列表）
+
+    pop(key[,default])
+        如果字典中有该key,则移除该key对应的条目，并返回该key对应的值；如果不存在该key，则返回default值。如果没有给定default值
+        并且字典中不存在该key值，那么会触发一个KeyError错误。
+
+    popitem()
+        从字典中随机移除一个条目，并将该条目（key,value）返回。popitem()对字典的破坏性迭代特别有用，所以经常在集合中使用。
+        如果字典中已经没有条目，那么该方法会触发一个KeyError错误。
+
+    setdefault(key[,default])
+        如果该key已经在字典中，那么返回key对应的值；如果不在字典中，则将该key插入到字典中，该key对应的值为该方法设定的default
+        值，并返回default值，如果没有设定default值，则对应None值。
+
+    update([other])
+        用other中的键值对来更新字典，重写已经存在的key值，返回None。
+</code></pre>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://blog.csdn.net/jeryjeryjery/article/details/72772145">CSDN</a></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[简单Python爬虫经验]]></title>
+        <id>https://nuistcz.github.io/post/Python_Spider_1</id>
+        <link href="https://nuistcz.github.io/post/Python_Spider_1">
+        </link>
+        <updated>2018-07-03T12:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>静态页面常用requests库简单爬出页面，但是动态网页需要模拟加载数据的过程，因此需要使用Selenium库。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>静态页面常用requests库简单爬出页面，但是动态网页需要模拟加载数据的过程，因此需要使用Selenium库。</p>
+<!-- more -->
+<h2 id="key">Key</h2>
+<blockquote>
+<p>关键词：Python 爬虫</p>
+</blockquote>
+<h3 id="设计思路">设计思路</h3>
+<p>静态页面中使用<code>import requests</code>函数可以直接获取html页面信息，再使用BeautifulSoup库拉出xml，利用find_all方法可以获取指定标签的信息。但是在动态页面中的有效信息一般通过JavaScript脚本从数据库读信息。例如本次爬取<a href="http://www.sse.com.cn/">上海证券交易所</a>的上市公司详情，定义在<code>'td'</code>标签下，静态页面中没有匹配，这时就只能用Selenium提取动态页面。</p>
+<h3 id="demo">Demo</h3>
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+from selenium import webdriver
+import os
+import time
+import csv
+from lxml import etree
+lis = []
+temp = []
+total = []
+c = open(&quot;anhui.csv&quot;, &quot;w&quot;)
+writer = csv.writer(c)
+
+for line in open(&quot;anhui.txt&quot;):
+	if line != '\n':
+		# date = ''.join(date).strip('\n')
+		lis.append(line[0:6])
+
+print (lis)
+
+for i in range(len(lis)):
+	url = &quot;http://www.sse.com.cn/assortment/stock/list/info/company/index.shtml?COMPANY_CODE=&quot;+str(lis[i])	
+	driver=webdriver.Safari()
+	driver.get(url)
+	time.sleep(4)
+	data = driver.page_source
+	soup = BeautifulSoup(data, 'lxml')
+	grades = soup.find_all('td')
+	for grade in grades:
+		temp.append(grade.get_text())
+		print (grade)
+	writer.writerow(temp)
+	temp = []
+	driver.quit()
+
+c.close()
+</code></pre>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://developer.apple.com">Python</a></li>
+</ul>
+]]></content>
+    </entry>
+</feed>
