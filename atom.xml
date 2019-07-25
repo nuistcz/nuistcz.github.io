@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nuistcz.github.io</id>
     <title>Masa</title>
-    <updated>2019-07-25T03:22:37.162Z</updated>
+    <updated>2019-07-25T03:24:39.021Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://nuistcz.github.io"/>
     <link rel="self" href="https://nuistcz.github.io/atom.xml"/>
@@ -901,6 +901,13 @@ os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = &quot;3&quot;
 Client: <code>ssh -N -f -L localhost:8888:localhost:8889 username@serverIP</code></p>
 <p>其中： -N 告诉SSH没有命令要被远程执行； -f 告诉SSH在后台执行； -L 是指定port forwarding的配置，远端端口是8889，本地的端口号的8888。</p>
 <p>最后打开浏览器，访问：http://localhost:8888/</p>
+<h3 id="screen">Screen</h3>
+<p>创建：screen -S ###</p>
+<p>查看有多少会话：screen -ls</p>
+<p>恢复：screen -r ###</p>
+<p>如果不能恢复：先screen -d ###</p>
+<p>再screen -r ###</p>
+<p>删除 screen -S ### -X quit</p>
 <h3 id="参考">参考</h3>
 <ul>
 <li><a href="https://www.jianshu.com/p/cfcc2b197308">简书/北静王</a></li>
